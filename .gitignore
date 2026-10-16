@@ -1,0 +1,13 @@
+# Ignorar carpetas internas de KiCad en cualquier nivel
+**/.history/
+**/_restore_backup_*/
+
+# Archivos temporales y de bloqueo
+*.lck
+~*
+*.kicad_prl
+*.bak
+*.bck
+*-save.kicad_pcb
+*-save.kicad_sch
+_autosave-*
