@@ -78,4 +78,33 @@ El diseño debe respetar, de forma obligatoria:
 
 ## Licencia
 
-Ver [LICENSE](LICENSE).
+Este proyecto es **hardware abierto** bajo la **CERN Open Hardware Licence
+Version 2 – Strongly Reciprocal (CERN-OHL-S v2)** — ver [LICENSE](LICENSE).
+
+Qué permite y qué exige:
+
+- ✅ **Usar, estudiar, modificar, fabricar, distribuir y vender** el diseño y los
+  productos basados en él. La **publicidad** está permitida.
+- 🔁 **Recíproca fuerte (copyleft):** toda variación o derivado debe licenciarse
+  también bajo CERN-OHL-S v2 — es decir, **toda variación sigue siendo hardware
+  abierto**.
+- 📝 Debes **conservar los avisos (Notices)** de copyright y autoría, e indicar tus
+  modificaciones (fecha y descripción breve).
+- 🔗 Debes **dar acceso al diseño fuente** (Source Location) del original y de tus
+  variaciones; si fabricas un producto, debes entregar la fuente o notificar dónde
+  obtenerla, y — si así se indica — mostrar la ubicación fuente en el producto o su
+  empaque (sección 4).
+
+**Aviso para incluir en el diseño / producto (Source Location = redirección al proyecto):**
+
+```
+Copyright 2026 Benjamín Garrido, José Tomás Romero
+
+This source describes Open Hardware and is licensed under the CERN-OHL-S v2.
+You may redistribute and modify this source and make products using it under
+the terms of the CERN-OHL-S v2 (https://ohwr.org/cern_ohl_s_v2.txt).
+This source is distributed WITHOUT ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING OF
+MERCHANTABILITY, SATISFACTORY QUALITY AND FITNESS FOR A PARTICULAR PURPOSE.
+Please see the CERN-OHL-S v2 for applicable conditions.
+Source Location: https://github.com/widerllama2014/ecgsimulator
+```
