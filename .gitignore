@@ -11,3 +11,13 @@
 *-save.kicad_pcb
 *-save.kicad_sch
 _autosave-*
+
+# Caché y backups de KiCad
+fp-info-cache
+*-backups/
+*.kicad_sch-bak
+*.kicad_pcb-bak
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
