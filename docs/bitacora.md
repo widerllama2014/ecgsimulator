@@ -2,6 +2,17 @@
 
 Registro cronológico de avances, decisiones y problemas.
 
+## 2026-10-28 — Inicio del PCB: footprint del interruptor y reglas CNC
+
+- **SW1:** se creó un footprint propio `SW_Push_2P` (pulsador enclavado de 2 pines;
+  cuerpo 13,12×8,18 mm, pines a 4,88 mm, agujero 1,0 mm) en `electronica/libraries/` y
+  se asignó a SW1. Validado con ERC (0 violaciones).
+- **Reglas de diseño (CNC) configuradas** en el proyecto: ancho de pista mínimo
+  **0,8 mm**, separación cobre-cobre **0,8 mm** (clase Default y reglas globales).
+- **Pendiente de footprint:** solo el **BNC** (en stand-by por decisión del equipo).
+- **Siguiente:** importar footprints al PCB (Update PCB from Schematic), colocar por
+  bloques, contorno de placa + 4 agujeros Ø3,2 mm, ruteo a 1 cara (B.Cu).
+
 ## 2026-10-28 — Asignación de footprints (THT)
 
 - Footprints asignados y validados (ERC 0): resistencias →
