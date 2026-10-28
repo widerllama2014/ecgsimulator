@@ -2,6 +2,21 @@
 
 Registro cronológico de avances, decisiones y problemas.
 
+## 2026-10-28 — Asignación de footprints (THT)
+
+- Footprints asignados y validados (ERC 0): resistencias →
+  `R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal`; cerámicos (C1/C2/C4) →
+  `C_Disc_D5.0mm_W2.5mm_P2.50mm`; electrolítico C3 → `CP_Radial_D6.3mm_P2.50mm`;
+  LEDs → `LED_D5.0mm`; diodo 1N5819 → `D_DO-41_SOD81_P10.16mm_Horizontal`;
+  batería → `JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical`; bornes RA/LA/LL/RL →
+  `TestPoint_THTPad_D2.0mm_Drill1.0mm` (jacks banana van en panel, por cable).
+- **Pendientes de footprint:** SW1 (tipo de interruptor por confirmar) y J_BNC
+  (el CN381 es conector de cable, no de PCB → se definirá cómo conecta el coaxial).
+- **Dudas de valores a resolver con el equipo:** atenuador en esquema = 330k pero el
+  equipo consiguió 100k; verificar que haya dos 330 Ω (LED encendido + LED BT) y los
+  condensadores C3 (100 µF) y C4 (100 n) de desacople.
+- Respaldo previo: `Proyecto de prueba.kicad_sch.bak2`.
+
 ## 2026-10-27 — Esquemático reorganizado en 3 bloques con cableado real
 
 - Se reorganizó el esquemático en **tres bloques** con marco y título, cableado con
