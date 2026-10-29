@@ -49,6 +49,7 @@
         "silk_text_size_v": 1.0,
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
+        "track_width": 0.8,
         "zones": {
           "border_display_style": 2,
           "border_hatch_pitch": 0.5,
@@ -67,8 +68,7 @@
           "remove_islands": 0,
           "thermal_relief_gap": 0.5,
           "thermal_relief_spoke_width": 0.5
-        },
-        "track_width": 0.8
+        }
       },
       "diff_pair_dimensions": [],
       "drc_exclusions": [],
@@ -658,17 +658,17 @@
     "top_level_sheets": [
       {
         "filename": "Proyecto de prueba.kicad_sch",
-        "name": "Ra\u00edz",
+        "name": "Raíz",
         "uuid": "a97c120f-b434-430d-8622-c04d8223901b"
       }
     ],
-    "used_designators": "D1-3,#PWR1-11,LL1,J1-2,#FLG1-2,R1-7,C1-4,#Ge1,LA1,U1,#P7e2e1,J_BNC1,J_LA1,J_LL1,J_RA1,#G8e53,J_RL1,M1-3,TP2,#Gab5a1,#G1,#P547e1,#G1a1,#G2ee1,#G2d1,#G39e1,#Gd1,BT1,SW1",
+    "used_designators": "D1-3,#PWR1-11,LL1,J1-2,#FLG1-2,R1-7,C1-5,#Ge1,LA1,U1,#P7e2e1,J_BNC1,J_LA1,J_LL1,J_RA1,#G8e53,J_RL1,M1-3,TP2,#Gab5a1,#G1,#P547e1,#G1a1,#G2ee1,#G2d1,#G39e1,#Gd1,BT1,SW1",
     "variants": []
   },
   "sheets": [
     [
       "a97c120f-b434-430d-8622-c04d8223901b",
-      "Ra\u00edz"
+      "Raíz"
     ]
   ],
   "text_variables": {},
