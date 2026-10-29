@@ -2,6 +2,19 @@
 
 Registro cronológico de avances, decisiones y problemas.
 
+## 2026-10-29 — PCB: colocación por bloques, contorno y agujeros
+
+- Se colocaron los 23 footprints en el PCB en **dos mitades** (arriba señal + bornes
+  centrados + switch + LEDs + título "Simulador de ECG"; abajo ESP32 con USB al borde
+  y alimentación batería→TP→MT con USB-C al borde).
+- **Contorno de placa 80×130 mm** y **4 agujeros de montaje Ø3,2 mm** (fresados como
+  círculos en Edge.Cuts), más una línea guía en la mitad.
+- DRC: sin solapes ni cortos por colocación. **Quedan clearances intrínsecos** de
+  piezas estándar vs la regla de 0,8 mm (LEDs 0,74 mm, TP 0,6–0,7 mm, **JST 0,25 mm**)
+  → decisión pendiente (la batería JST no es fresable a 0,8 mm). Silk solapado
+  (cosmético, se arregla con autoplace de campos). Falta re-importar para sincronizar
+  footprints de M1/BT1 y el **ruteo** (1 cara).
+
 ## 2026-10-28 — Inicio del PCB: footprint del interruptor y reglas CNC
 
 - **SW1:** se creó un footprint propio `SW_Push_2P` (pulsador enclavado de 2 pines;
