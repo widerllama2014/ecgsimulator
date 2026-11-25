@@ -76,16 +76,7 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [
-        [
-          "lib_footprint_mismatch|151000000|148262500|eae08956-53bf-4292-b132-97a85faae2a2|00000000-0000-0000-0000-000000000000",
-          ""
-        ],
-        [
-          "lib_footprint_mismatch|170000000|148500000|81e9b5c9-ee56-4340-94f5-55decf903659|00000000-0000-0000-0000-000000000000",
-          ""
-        ]
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
@@ -547,7 +538,7 @@
     "last_paths": {
       "idf": "",
       "netlist": "",
-      "plot": "../../../../../../../../",
+      "plot": "../../../../../../../../../batman/",
       "specctra_dsn": "",
       "step": "",
       "vrml": ""
@@ -684,7 +675,7 @@
         "uuid": "a97c120f-b434-430d-8622-c04d8223901b"
       }
     ],
-    "used_designators": "D1-3,#PWR1-11,#PWR15,LL1,J1-2,#FLG1-2,R1-7,R11-12,C1-4,#Ge1,LA1,U1,#P7e2e1,J_BNC1,J_LA1-2,J_LL1-2,J_RA1,#G8e53,J_RL1,M1-3,TP2-3,#Gab5a1,#G1,#P547e1,#G1a1,#G2ee1,#G2d1,#G39e1,#Gd1,BT1,SW1-2",
+    "used_designators": "D1-3,#PWR1-11,#PWR15-16,LL1,J1-2,#FLG1-2,R1-7,R11-12,C1-4,#Ge1,LA1,U1,#P7e2e1,J_BNC1,J_LA1-2,J_LL1-2,J_RA1,#G8e53,J_RL1,M1-3,TP2-3,#Gab5a1,#G1,#P547e1,#G1a1,#G2ee1,#G2d1,#G39e1,#Gd1,BT1,SW1-2",
     "variants": []
   },
   "sheets": [
