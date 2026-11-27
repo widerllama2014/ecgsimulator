@@ -1,0 +1,398 @@
+(footprint "TP4056_modulo"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "M2"
+		(at 13.6 19.6 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "b3d70fc5-edcb-4519-bb4b-a6e7df1e3189")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "TP4056_modulo"
+		(at 13 6.3125 0)
+		(layer "F.Fab")
+		(uuid "0ddf95cd-8800-4da8-87df-30e49366cb5f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "dbc7181c-7122-40a5-b463-d352361440ba")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" "Modulo cargador LiPo TP4056 USB-C (pads B+/B-/OUT+/OUT-/IN+/IN-)"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "4c367bf7-af46-4e9c-8362-801955ed97d0")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(sheetname "/")
+	(sheetfile "Proyecto de prueba.kicad_sch")
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start 0 0)
+		(end 26.3 0)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4e837792-58b3-491a-bf4e-ec1cf0b67b0b")
+	)
+	(fp_line
+		(start 0 17.8)
+		(end 0 0)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "4f55930b-6689-47e7-b215-c7e0f2c641fc")
+	)
+	(fp_line
+		(start 0.4 7.2)
+		(end 2.9 7.2)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b150ad6b-f0a0-4322-b185-c118a0ba2da8")
+	)
+	(fp_line
+		(start 0.4 11)
+		(end 0.4 7.3)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "3c671c98-e057-4665-861f-b130fed340f7")
+	)
+	(fp_line
+		(start 2.9 7.2)
+		(end 2.9 11)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "ace6f075-c8b4-4bb0-b6fd-fbb242f4e278")
+	)
+	(fp_line
+		(start 2.9 11)
+		(end 0.4 11)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "7621bc48-8b38-4588-ab2b-f16b5f09c1b2")
+	)
+	(fp_line
+		(start 26.3 0)
+		(end 28.4 0)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e5bb3098-9cad-4312-ac24-4f2894276265")
+	)
+	(fp_line
+		(start 26.5 2.5)
+		(end 26.5 15.4)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e49700be-c14d-4f0a-bfe7-bed806a82486")
+	)
+	(fp_line
+		(start 26.5 15.4)
+		(end 28.4 15.4)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "35551a68-0deb-4f95-9463-38a84e0bc2cc")
+	)
+	(fp_line
+		(start 28.4 0)
+		(end 28.4 2.5)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b2e14f1a-9814-47e8-b5e3-7d062b20461c")
+	)
+	(fp_line
+		(start 28.4 2.5)
+		(end 26.5 2.5)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "48f1ecb4-a078-48f1-9bb5-b891efd56e58")
+	)
+	(fp_line
+		(start 28.4 15.4)
+		(end 28.4 15.7)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b6b65ae1-04ae-4f61-b4a2-c395f8cb48c5")
+	)
+	(fp_line
+		(start 28.4 15.7)
+		(end 28.4 17.8)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "723e8864-f6fa-41ef-80d0-542e6fbc6829")
+	)
+	(fp_line
+		(start 28.4 17.8)
+		(end 0 17.8)
+		(stroke
+			(width 0.15)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "ed16d3cc-20a9-4f68-856b-d5ac18c6a203")
+	)
+	(fp_line
+		(start -0.5 -0.5)
+		(end 22 -0.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Margin")
+		(uuid "18c8136b-c3d8-4f26-96ab-da0de488e776")
+	)
+	(fp_line
+		(start -0.5 18.5)
+		(end -0.5 -0.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Margin")
+		(uuid "25de6fa3-e039-410a-bac4-e7b6e0d6b2d8")
+	)
+	(fp_line
+		(start 22 18.5)
+		(end -0.5 18.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Margin")
+		(uuid "f5ad4b6f-fa95-41e7-b406-9c96b7781a26")
+	)
+	(fp_line
+		(start 27 6.5)
+		(end 27 11)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "Margin")
+		(uuid "20b24640-9d1c-430e-b7ac-6c9f4f7df786")
+	)
+	(fp_text user "USB"
+		(at 1.6 9.1 270)
+		(layer "F.SilkS")
+		(uuid "86dd85e4-97e8-498d-8b6d-bbcbd262f935")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "5v"
+		(at 1.7 4.1 0)
+		(layer "F.SilkS")
+		(uuid "9fdb1f82-1bdf-472c-a96c-162d7506cce4")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "GND"
+		(at 1.8 13.7 0)
+		(layer "F.SilkS")
+		(uuid "5c829b1c-e83c-46eb-8dec-666b5573720e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "+"
+		(at 3.9 1.6 0)
+		(layer "F.SilkS")
+		(uuid "0907b7d6-c58e-4dfb-a4e6-6abd329735c8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "-"
+		(at 4 16.8 0)
+		(layer "F.SilkS")
+		(uuid "6de41637-fcce-4b1c-a7df-ab08444376a0")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "Out+"
+		(at 20.9 1.6 0)
+		(layer "F.SilkS")
+		(uuid "bd6d18e4-d2f4-49c8-aeeb-b1d20a63f68f")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "Out-"
+		(at 21 16.2 0)
+		(layer "F.SilkS")
+		(uuid "61fe83a4-8c1e-4a55-bb61-ae0217aa237e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "B+"
+		(at 21.7 5.1 0)
+		(layer "F.SilkS")
+		(uuid "a3ef7360-dc1e-491f-b046-bda7bce17d47")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "B-"
+		(at 21.7 12.7 0)
+		(layer "F.SilkS")
+		(uuid "1078e631-93c3-43c6-b0e8-a6fad01b20bc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at 1.7 1.7)
+		(size 2.8 2.8)
+		(drill 1.54)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "7dafe1f2-76f0-4fb4-9221-7ea38a216193")
+	)
+	(pad "2" thru_hole rect
+		(at 1.7 15.9)
+		(size 2.8 2.8)
+		(drill 1.54)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "b78527cc-d73b-43fa-bdaf-7d523ab598e7")
+	)
+	(pad "3" thru_hole oval
+		(at 24.6 16.2)
+		(size 3 2)
+		(drill 1.54
+			(offset 0 0.0023)
+		)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "d5b8f5e1-c1dd-4902-a975-9034694dd701")
+	)
+	(pad "4" thru_hole oval
+		(at 24.6 12.8)
+		(size 3 2)
+		(drill 1.54)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "aba9738b-cc41-4ec5-ac25-f613e4048c6f")
+	)
+	(pad "5" thru_hole oval
+		(at 24.6 5.2)
+		(size 3 2)
+		(drill 1.54)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "f92fc271-2215-4005-8f06-6a5d5480ef46")
+	)
+	(pad "6" thru_hole oval
+		(at 24.6 1.7)
+		(size 3 2)
+		(drill 1.54
+			(offset 0 0.0023)
+		)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "0148a954-95ec-4241-bed8-4f28acbb9cc4")
+	)
+	(embedded_fonts no)
+	(model "C:/Users/jtrom/OneDrive/Escritorio/Trabajos/universidad/CLASES/Cuarto Semestre/Electronica biomedica/ecgsimulator_proyect/repository/electronica/libraries/3dmodels/TP4056_Charging_Module_Type_C.step"
+		(offset
+			(xyz 14 -9 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 -180)
+		)
+	)
+)

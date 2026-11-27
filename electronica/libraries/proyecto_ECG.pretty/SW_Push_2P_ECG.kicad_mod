@@ -1,0 +1,186 @@
+(footprint "SW_Push_2P_ECG"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(descr "Pulsador enclavado 2 pines THT. Cuerpo 13.12x8.18mm. Lenguetas planas 0.44(X)x3.7(Y)mm, hueco 4.88 -> pitch 5.32mm, desplazadas a la derecha. Ranuras 0.8x3.9mm.")
+	(tags "switch push button latching THT 2pin lengueta slot")
+	(property "Reference" "SW2"
+		(at -2.76 7 180)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "dd793680-b731-4bb8-90d1-5a31e2efeefc")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "SW_SPST"
+		(at -3.26 5.4 180)
+		(layer "F.Fab")
+		(uuid "b6a503a2-3324-41bd-875e-5baeae104153")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d05cd11b-4938-4fbe-90be-e728da56b6d2")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" "Single Pole Single Throw (SPST) switch"
+		(at 0 0 180)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "11e4067b-e530-4543-a57c-e0a307d14618")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(sheetname "/")
+	(sheetfile "Proyecto de prueba.kicad_sch")
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -9.32 -4.09)
+		(end 3.8 -4.09)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "52373a18-dcbe-4c58-a841-44e9656c8163")
+	)
+	(fp_line
+		(start -9.32 4.09)
+		(end -9.32 -4.09)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "944591df-6b4f-4c11-b481-b46811cdb729")
+	)
+	(fp_line
+		(start -4.3 -2.6)
+		(end -4.3 2.6)
+		(stroke
+			(width 0.3)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "7cfda564-81a2-499e-a13c-22b27a530c7d")
+	)
+	(fp_line
+		(start 3.8 -4.09)
+		(end 3.8 4.09)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "5953fe4c-cb3f-4b35-b694-6815a45c5c0a")
+	)
+	(fp_line
+		(start 3.8 4.09)
+		(end -9.32 4.09)
+		(stroke
+			(width 0.12)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "d06ce48d-cbed-4c81-95d8-9eb4558ac087")
+	)
+	(fp_rect
+		(start -9.62 -4.39)
+		(end 4.1 4.39)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "7e4764f3-aa14-4c4d-862f-6e194e85b08b")
+	)
+	(fp_line
+		(start -9.32 -4.09)
+		(end 3.8 -4.09)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "20a05220-78f4-4f90-9e63-2bfd91169636")
+	)
+	(fp_line
+		(start -9.32 4.09)
+		(end -9.32 -4.09)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "56cb02e5-748a-44ca-804a-f1612e4052ea")
+	)
+	(fp_line
+		(start 3.8 -4.09)
+		(end 3.8 4.09)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "480282b2-bd3e-4b35-84ae-bd92b3ef75d2")
+	)
+	(fp_line
+		(start 3.8 4.09)
+		(end -9.32 4.09)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "e3344873-f970-4435-910d-5dcd7ae50450")
+	)
+	(pad "1" thru_hole oval
+		(at -2.66 0)
+		(size 2 6)
+		(drill oval 0.8 3.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "4dcdb129-0aa1-4534-9033-06254df555c2")
+	)
+	(pad "2" thru_hole oval
+		(at 2.66 0)
+		(size 2 6)
+		(drill oval 0.8 3.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "2280c328-2765-4b9e-91fd-46959d18464b")
+	)
+	(embedded_fonts no)
+	(model "C:/Users/jtrom/OneDrive/Escritorio/Trabajos/universidad/CLASES/Cuarto Semestre/Electronica biomedica/ecgsimulator_proyect/repository/electronica/libraries/3dmodels/kcd1_a.step"
+		(offset
+			(xyz -2.5 0 6.5)
+		)
+		(scale
+			(xyz 0.65 0.75 0.65)
+		)
+		(rotate
+			(xyz -0 -0 90)
+		)
+	)
+)
