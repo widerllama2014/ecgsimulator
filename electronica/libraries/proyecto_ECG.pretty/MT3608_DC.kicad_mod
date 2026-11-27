@@ -3,10 +3,10 @@
 	(generator "pcbnew")
 	(generator_version "10.0")
 	(layer "F.Cu")
-	(property "Reference" "REF**"
+	(property "Reference" "U"
 		(at -15.325 -9.635 0)
 		(layer "F.SilkS")
-		(uuid "4989eda9-3f90-42af-9745-128dbeeb652a")
+		(uuid "94f159d9-559c-4b1c-84f8-396bb81f0bbf")
 		(effects
 			(font
 				(size 1 1)
@@ -17,7 +17,7 @@
 	(property "Value" "MODULE_MT3608_DC-DC_STEP_UP_CONVERTER_2A_BOOSTER_MODULE"
 		(at 16.425 9.865 0)
 		(layer "F.Fab")
-		(uuid "3767d978-55fc-44a5-86cd-10fb27e0f2ba")
+		(uuid "1f3bb0dd-bdde-4c11-a451-257d47adc44e")
 		(effects
 			(font
 				(size 1 1)
@@ -25,22 +25,22 @@
 			)
 		)
 	)
-	(property "Datasheet" ""
+	(property "Datasheet" "file://C:\\Users\\jtrom\\OneDrive\\Escritorio\\Trabajos\\universidad\\CLASES\\Cuarto Semestre\\Electronica biomedica\\ecgsimulator_proyect\\repository\\docs\\datasheets\\MT3608.pdf"
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "2ef607ac-7d4c-4067-84a5-ae29998023e9")
+		(uuid "40f54ed7-cb1f-49bf-ac3f-4288f4aabc8c")
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 		)
 	)
-	(property "Description" ""
+	(property "Description" "UP VOLTAGE REGULATOR"
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "f5644b38-b379-4b33-88d1-e878371cf2eb")
+		(uuid "94afe0e3-d938-4d56-b92e-10dc8bcdba21")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -59,7 +59,7 @@
 		)
 		(fill yes)
 		(layer "F.Mask")
-		(uuid "f6caf277-71e4-4636-ae2b-912a32a0488c")
+		(uuid "1c41f3a6-5899-4098-a67a-9908024dec55")
 	)
 	(fp_poly
 		(pts
@@ -71,7 +71,7 @@
 		)
 		(fill yes)
 		(layer "F.Mask")
-		(uuid "4e262300-ad27-4928-b349-e58045d901d9")
+		(uuid "1eb895fb-b18e-454e-ac20-ba615638ad0c")
 	)
 	(fp_poly
 		(pts
@@ -83,7 +83,7 @@
 		)
 		(fill yes)
 		(layer "F.Mask")
-		(uuid "ea1b4d38-993c-41bd-a3a6-7c0d0fdeedd1")
+		(uuid "654ccb81-5598-42bf-892c-eb17e1f714b2")
 	)
 	(fp_poly
 		(pts
@@ -95,7 +95,7 @@
 		)
 		(fill yes)
 		(layer "F.Mask")
-		(uuid "214911fb-e0ab-42ed-9600-ba1aeffc005b")
+		(uuid "c6fde78a-28b6-41b7-82cf-80d244c1acfd")
 	)
 	(fp_poly
 		(pts
@@ -107,7 +107,7 @@
 		)
 		(fill yes)
 		(layer "B.Mask")
-		(uuid "a28fce67-5882-4e8d-a8ab-d0bfb529afe6")
+		(uuid "d10cb533-6289-4232-a450-c75fc10b084e")
 	)
 	(fp_poly
 		(pts
@@ -119,7 +119,7 @@
 		)
 		(fill yes)
 		(layer "B.Mask")
-		(uuid "944b861b-0e7b-4bab-a6cf-041425e25a03")
+		(uuid "3fdb8669-afe1-49e0-9eb3-07cfc5a67514")
 	)
 	(fp_poly
 		(pts
@@ -131,7 +131,7 @@
 		)
 		(fill yes)
 		(layer "B.Mask")
-		(uuid "9470e4da-a979-48ba-8601-d832b778ac94")
+		(uuid "499da60b-3966-486e-a47e-bf98ca9406ea")
 	)
 	(fp_poly
 		(pts
@@ -143,7 +143,7 @@
 		)
 		(fill yes)
 		(layer "B.Mask")
-		(uuid "8040a544-e8ee-4d09-abf3-4ab20ba60069")
+		(uuid "01d2a20d-5950-4157-bad0-53ce4fe363b6")
 	)
 	(fp_line
 		(start -18.575 -8.6)
@@ -153,7 +153,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "0b4b234e-4ca0-4f58-b588-a4cd58fa535a")
+		(uuid "a13de405-1980-4333-8af7-95395934f234")
 	)
 	(fp_line
 		(start -18.575 -5.42)
@@ -163,7 +163,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "92bed2a7-1a2c-408d-aa83-414134d1a749")
+		(uuid "f97d86aa-96b5-4b4f-94b7-2f094459a5da")
 	)
 	(fp_line
 		(start -18.575 1.78)
@@ -173,7 +173,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "dcbfadbf-4679-4dbf-b354-14449fa40543")
+		(uuid "047078cf-ce80-4ef6-9e5a-c9f7159f20e4")
 	)
 	(fp_line
 		(start -18.575 8.6)
@@ -183,7 +183,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "428253ac-4599-4e2f-bee0-6c3bc0628ce4")
+		(uuid "d28311ee-b3e9-447c-9b71-94aaf9ba3cd5")
 	)
 	(fp_line
 		(start 18.575 -8.6)
@@ -193,7 +193,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "db07720d-9516-48b4-9572-178a596f60fe")
+		(uuid "1b13641f-f68a-4bf2-9491-f6bb2b0d03b8")
 	)
 	(fp_line
 		(start 18.575 -1.78)
@@ -203,7 +203,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "7937019c-5cb5-4bf8-ab18-6e3cf0cfd02b")
+		(uuid "26e937cd-3c89-45c7-971d-e076b3fc5c97")
 	)
 	(fp_line
 		(start 18.575 5.42)
@@ -213,7 +213,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "9998bf10-6058-4a2d-a4f0-5ee93a764a08")
+		(uuid "d7e9e765-2003-417e-ad2f-3c0cddaa3069")
 	)
 	(fp_line
 		(start 18.575 8.6)
@@ -223,7 +223,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "0bf2fe2d-8657-4e48-8cb3-2d5643a96ffd")
+		(uuid "bab62694-8615-4c10-a31b-7f020e355d65")
 	)
 	(fp_line
 		(start -18.825 -8.85)
@@ -233,7 +233,7 @@
 			(type solid)
 		)
 		(layer "F.CrtYd")
-		(uuid "463bb61a-7816-4c27-b6c1-83af0d41d29a")
+		(uuid "d22b94a5-981b-4502-b7c6-b628cf01f00d")
 	)
 	(fp_line
 		(start -18.825 9.07525)
@@ -243,7 +243,7 @@
 			(type solid)
 		)
 		(layer "F.CrtYd")
-		(uuid "6c9cbe05-e4bd-41f3-b398-6aead76f5350")
+		(uuid "781a8bef-ca9f-439f-afde-8865c29f23c3")
 	)
 	(fp_line
 		(start 18.825 -8.85)
@@ -253,7 +253,7 @@
 			(type solid)
 		)
 		(layer "F.CrtYd")
-		(uuid "e44c9e77-4c91-4289-88b2-e0befa22c560")
+		(uuid "74c74641-2172-40dc-b315-3c718f105e60")
 	)
 	(fp_line
 		(start 18.825 9.07525)
@@ -263,7 +263,7 @@
 			(type solid)
 		)
 		(layer "F.CrtYd")
-		(uuid "79a58f6f-1bd5-4473-a247-0d4c0a4b9af3")
+		(uuid "e661c740-05aa-4d75-be03-e4cc2ea51c41")
 	)
 	(fp_line
 		(start -18.575 -8.6)
@@ -273,7 +273,7 @@
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "a24f3f7a-d128-44f9-9e2d-e82111ac1a4b")
+		(uuid "6e10d770-50e5-46b6-adea-4378f24a0788")
 	)
 	(fp_line
 		(start -18.575 8.6)
@@ -283,7 +283,7 @@
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "f03a0a25-bf34-4ca6-9f47-f859abff1258")
+		(uuid "4bb2a97e-b225-401e-99b9-e3ccf388859f")
 	)
 	(fp_line
 		(start 18.575 -8.6)
@@ -293,7 +293,7 @@
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "9f8b344d-3be6-43a8-92aa-2cef67c10bbc")
+		(uuid "bc618dce-2358-48c4-992b-3cc1c2b78742")
 	)
 	(fp_line
 		(start 18.575 8.6)
@@ -303,12 +303,12 @@
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "27b255ba-5dc5-4163-9f42-095b457fa7e1")
+		(uuid "0eda5abc-8a9e-4ea6-a878-4ebc0ee628df")
 	)
 	(fp_text user "VOUT+"
 		(at -18 -5.75 0)
 		(layer "F.Fab")
-		(uuid "94b9bc16-dea8-48d8-a1a3-2947719db18b")
+		(uuid "55ac43b0-eda2-4d65-a515-704bc81cd0d4")
 		(effects
 			(font
 				(size 1 1)
@@ -319,7 +319,7 @@
 	(fp_text user "VOUT-"
 		(at -18 7 0)
 		(layer "F.Fab")
-		(uuid "7f9ebe55-9a4b-41a4-9503-97a8dee0c3ba")
+		(uuid "3a3b4d4c-984a-4180-9c49-c94b09b2a725")
 		(effects
 			(font
 				(size 1 1)
@@ -330,7 +330,7 @@
 	(fp_text user "VIN+"
 		(at 13 -5.75 0)
 		(layer "F.Fab")
-		(uuid "d5a2de55-45d0-486a-b827-66383ae0f5ba")
+		(uuid "db917139-2e68-418b-b5e4-6bf1fd859b12")
 		(effects
 			(font
 				(size 1 1)
@@ -341,7 +341,7 @@
 	(fp_text user "VIN-"
 		(at 13 7 0)
 		(layer "F.Fab")
-		(uuid "da74b78f-07db-4df4-b631-3cef94c96964")
+		(uuid "f4b7e87f-79f5-4c7f-a585-a5800594949a")
 		(effects
 			(font
 				(size 1 1)
@@ -369,7 +369,7 @@
 				(fill yes)
 			)
 		)
-		(uuid "5246d72d-50d9-4f62-a05b-f52cb26cc1a0")
+		(uuid "64263ae2-070b-4cbd-ba36-901e6840e2b7")
 	)
 	(pad "2" thru_hole custom
 		(at -15.775 3.6)
@@ -391,7 +391,7 @@
 				(fill yes)
 			)
 		)
-		(uuid "6b3d134e-9f74-4130-bd1f-48591aeb594e")
+		(uuid "ab2e5d0f-62da-46db-aa08-160444da297a")
 	)
 	(pad "3" thru_hole custom
 		(at 15.775 3.6)
@@ -413,7 +413,7 @@
 				(fill yes)
 			)
 		)
-		(uuid "e7789295-6ade-4780-ae79-5b56e94f2434")
+		(uuid "9de7aed4-12f3-4e5d-95ed-ee812348c9e6")
 	)
 	(pad "4" thru_hole custom
 		(at 15.775 -3.6)
@@ -435,7 +435,7 @@
 				(fill yes)
 			)
 		)
-		(uuid "7cef4619-8dca-4f8e-b3d8-67cbeed12377")
+		(uuid "5b3a32c6-34ca-481a-8024-b2e4814b1275")
 	)
 	(embedded_fonts no)
 	(model "C:/Users/jtrom/OneDrive/Escritorio/Trabajos/universidad/CLASES/Cuarto Semestre/Electronica biomedica/ecgsimulator_proyect/repository/electronica/libraries/3dmodels/MT3608_DC.STEP"
