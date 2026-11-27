@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0;font:14px system-ui}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>Banco virtual ECG</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Mesa de laboratorio: a la izquierda el "paciente", al centro los dos instrumentos de pantalla, a la derecha la placa y sus números. */
+:root {
+  --bg: #eef1f0; --panel: #ffffff; --ink: #18222b; --muted: #5b6a76; --line: #d5dcdf;
+  --accent: #0b6b62; --accent-ink: #ffffff; --warn: #b45309; --skin: #dfe6e8; --skin-line: #9fb0b8;
+  --scr: #070b0e; --scr-grid: #1c2730; --scr-ink: #a9b8c4;           /* pantallas: siempre oscuras */
+  --ch1: #f5d90a; --ch2: #22d3ee; --ch3: #e879f9; --vec: #fb923c; --led: #ef4444;
+  --f-head: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --f-body: "Inter", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1216; --panel: #151c22; --ink: #e6ecef; --muted: #93a3ae; --line: #27323b;
+  --accent: #2dd4bf; --accent-ink: #062623; --warn: #fbbf24; --skin: #1b252e; --skin-line: #3d4d5a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0d1216; --panel: #151c22; --ink: #e6ecef; --muted: #93a3ae; --line: #27323b;
+  --accent: #2dd4bf; --accent-ink: #062623; --warn: #fbbf24; --skin: #1b252e; --skin-line: #3d4d5a; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font: 14px/1.45 var(--f-body);
+  padding-block: 20px 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.wrap { max-width: 1500px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px }
+header { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: flex-end; justify-content: space-between }
+h1 { font: 700 26px/1.1 var(--f-head); margin: 0; letter-spacing: -0.01em }
+.sub { color: var(--muted); margin: 4px 0 0; max-width: 62ch }
+h2 { font: 500 12px/1 var(--f-head); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin: 0 }
+.cols { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start }
+.col { display: flex; flex-direction: column; gap: 16px; min-width: 0 }
+.col.a { flex: 1 1 300px } .col.b { flex: 2 1 420px } .col.c { flex: 1.1 1 320px }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0 }
+.head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap }
+canvas { display: block; width: 100%; border-radius: 6px; touch-action: none }
+.screen { background: var(--scr) }
+#cvBody { aspect-ratio: 66 / 88; cursor: grab } #cvMon { aspect-ratio: 16 / 9 } #cvScope { aspect-ratio: 3 / 2 }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+.row.sp { justify-content: space-between }
+label { color: var(--muted); font-size: 12px; display: flex; flex-direction: column; gap: 3px; min-width: 0 }
+label.in { flex-direction: row; align-items: center; gap: 6px }
+select, input[type="number"], input[type="text"] { font: 13px var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 5px 7px; min-width: 0 }
+input[type="number"] { width: 92px; font-family: var(--f-mono) }
+input[type="range"] { accent-color: var(--accent); width: 100%; min-width: 0 }
+button { font: 500 13px var(--f-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; cursor: pointer }
+button:hover { border-color: var(--accent) }
+button.on, button.pri { background: var(--accent); color: var(--accent-ink); border-color: var(--accent) }
+:is(button, select, input, canvas):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden }
+.seg button { border: 0; border-radius: 0; background: transparent }
+.seg button.on { background: var(--accent); color: var(--accent-ink) }
+.chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 6px }
+.chips button { text-align: left; font-size: 12.5px }
+.pin { font: 600 10px var(--f-mono); color: var(--muted); display: block }
+button.on .pin, button.pri .pin { color: inherit; opacity: .8 }
+.led { width: 12px; height: 12px; border-radius: 50%; background: var(--line); display: inline-block; vertical-align: -1px }
+.led.on { background: var(--led); box-shadow: 0 0 8px var(--led) }
+.note { color: var(--muted); font-size: 12px; margin: 0 }
+.warn { color: var(--warn); font-size: 12.5px; font-weight: 500; margin: 0 }
+table { border-collapse: collapse; width: 100%; font-size: 13px }
+th { text-align: left; font-weight: 500; color: var(--muted); font-size: 11.5px; padding: 3px 6px 3px 0 }
+td { padding: 4px 6px 4px 0; border-top: 1px solid var(--line); font-variant-numeric: tabular-nums }
+td.n, th.n { text-align: right; font-family: var(--f-mono); padding-right: 0 }
+.tw { overflow-x: auto }
+pre#log { font: 12px/1.5 var(--f-mono); background: var(--scr); color: var(--scr-ink); border-radius: 6px; padding: 10px; margin: 0; height: 190px; overflow: auto; white-space: pre-wrap; word-break: break-word }
+pre#log .tx { color: var(--ch2) }
+.read { font: 12px var(--f-mono); color: var(--muted); display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2px 14px }
+.read b { font-weight: 600 } .c1 { color: var(--ch1) } .c2 { color: var(--ch2) } .c3 { color: var(--ch3) }
+.read .c1, .read .c2, .read .c3 { background: var(--scr); padding: 3px 6px; border-radius: 4px }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px }
+details summary { cursor: pointer; color: var(--muted); font-size: 12px }
+code { font-family: var(--f-mono); font-size: 12px }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Banco virtual ECG</h1>
+      <p class="sub">El circuito de la protoboard y el código de la ESP32-CAM, simulados período por período del PWM. Sirve para saber qué deberías ver antes de medir en la placa real.</p>
+    </div>
+    <div class="row">
+      <label>Código cargado en la placa
+        <span class="seg" role="group" aria-label="Código cargado">
+          <button id="fwVec" class="on">Modo vector v2</button><button id="fwDos">2 canales</button>
+        </span>
+      </label>
+      <button id="btnPausa" aria-pressed="false">Pausar</button>
+    </div>
+  </header>
+
+  <div class="cols">
+    <!-- ================= A: paciente ================= -->
+    <div class="col a">
+      <section class="panel">
+        <div class="head"><h2>Cuerpo y electrodos</h2>
+          <span class="seg" role="group" aria-label="Vista"><button id="vFrente" class="on">Frente</button><button id="v3d">3D</button></span>
+        </div>
+        <canvas id="cvBody" aria-label="Cuerpo con las pinzas RA, LA y LL"></canvas>
+        <p class="note" id="bodyHint">Arrastra una pinza. Al soltarla cerca de su lugar normal, se pega a él.</p>
+        <div id="ctlVec" class="col" style="gap:10px">
+          <div class="chips" id="chips"></div>
+          <label>Eje del corazón: <span id="ejeTxt"></span>
+            <input type="range" id="eje" min="-180" max="180" step="5" value="41"></label>
+          <div class="row sp">
+            <label class="in">Ritmo <select id="ritmo"><option value="0">40 lpm</option><option value="1" selected>60 lpm</option><option value="2">120 lpm</option><option value="3">180 lpm</option><option value="4">Calibración 1 mV</option></select></label>
+            <button id="reponer">Reponer pinzas</button>
+          </div>
+        </div>
+        <p class="note" id="ctlDos" hidden>Este código no mueve electrodos ni gira el corazón: LA y LL tienen su forma fija. Se maneja con los tres botones de la placa.</p>
+      </section>
+    </div>
+
+    <!-- ================= B: instrumentos ================= -->
+    <div class="col b">
+      <section class="panel">
+        <div class="head"><h2>Monitor de ECG conectado a los bornes</h2><span class="note" id="monEsc">25 mm/s · 0,5 mV por línea</span></div>
+        <canvas id="cvMon" class="screen" aria-label="Derivaciones DI, DII y DIII"></canvas>
+        <div class="read" id="monRead"></div>
+        <p class="warn" id="aviso" hidden></p>
+      </section>
+
+      <section class="panel">
+        <div class="head"><h2>Osciloscopio</h2>
+          <div class="row"><button id="auto" class="pri">Ver los latidos</button><button id="preRiz">Ver el rizado del PWM</button><button id="prePin">Ver el PWM en el pin</button></div></div>
+        <canvas id="cvScope" class="screen" aria-label="Pantalla del osciloscopio"></canvas>
+        <div class="read" id="scRead"></div>
+        <div class="grid2">
+          <label>Dónde pones las puntas
+            <select id="punta"><option value="tp">Puntos de prueba (TP)</option><option value="pin">Pines IO14 e IO13</option><option value="borne">Bornes LA y LL</option></select></label>
+          <label>Voltaje por división
+            <select id="vdiv"></select></label>
+          <label>Tiempo por división
+            <select id="tdiv"></select></label>
+          <label>Acoplamiento
+            <select id="acople"><option value="dc">DC</option><option value="ac">AC</option></select></label>
+        </div>
+        <label>Posición horizontal dentro del latido: <span id="hposTxt"></span>
+          <input type="range" id="hpos" min="0" max="1000" step="1" value="400"></label>
+        <div class="row sp">
+          <label class="in"><input type="checkbox" id="math" checked> Math (CH2 − CH1)</label>
+          <details><summary>Posición vertical de cada traza</summary>
+            <div class="grid2" style="margin-top:6px">
+              <label>CH1 <input type="range" id="p1" min="-14" max="14" step="0.1"></label>
+              <label>CH2 <input type="range" id="p2" min="-14" max="14" step="0.1"></label>
+              <label>Math <input type="range" id="p3" min="-14" max="14" step="0.1"></label>
+            </div></details>
+        </div>
+        <p class="note" id="scNote"></p>
+      </section>
+    </div>
+
+    <!-- ================= C: placa ================= -->
+    <div class="col c">
+      <section class="panel">
+        <div class="head"><h2>ESP32-CAM</h2><span class="note"><span class="led" id="led"></span> LED rojo (GPIO33)</span></div>
+        <div class="row" id="botones"></div>
+        <pre id="log" aria-label="Monitor Serie" tabindex="0"></pre>
+        <form id="frm" class="row" autocomplete="off">
+          <input type="text" id="cmd" placeholder="Escribe un comando: 3, eje 75, ritmo 2, ?" style="flex:1 1 150px" aria-label="Comando para el Monitor Serie">
+          <button class="pri">Enviar</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Multímetro en DC</h2>
+        <div class="tw"><table>
+          <thead><tr><th>Punto</th><th class="n">Canal LA</th><th class="n">Canal LL</th></tr></thead>
+          <tbody id="multi"></tbody>
+        </table></div>
+        <p class="note" id="multiNota"></p>
+      </section>
+
+      <section class="panel">
+        <h2>Circuito y calibración</h2>
+        <p class="note"><code>IO → 1 kΩ → 100 nF → 10 kΩ → 10 nF (TP) → R3 → borne → R4 → GND</code></p>
+        <div class="tw"><table>
+          <thead><tr><th></th><th class="n">Canal LA (IO14)</th><th class="n">Canal LL (IO13)</th></tr></thead>
+          <tbody>
+            <tr><td>R3 real (Ω)</td><td class="n"><input type="number" id="r3a" value="220000" step="100" aria-label="R3 del canal LA"></td><td class="n"><input type="number" id="r3b" value="220000" step="100" aria-label="R3 del canal LL"></td></tr>
+            <tr><td>R4 real (Ω)</td><td class="n"><input type="number" id="r4a" value="200" step="1" aria-label="R4 del canal LA"></td><td class="n"><input type="number" id="r4b" value="200" step="1" aria-label="R4 del canal LL"></td></tr>
+            <tr><td>ATEN en el código</td><td class="n"><input type="number" id="ata" value="1101" step="0.1" aria-label="ATEN_LA"></td><td class="n"><input type="number" id="atb" value="1101" step="0.1" aria-label="ATEN_LL"></td></tr>
+          </tbody>
+        </table></div>
+        <div class="row">
+          <button id="cNom">Valores nominales</button>
+          <button id="cMal">Resistencias con 5 % de error</button>
+          <button id="cCal" class="pri">Calibrar el código</button>
+        </div>
+        <p class="note" id="calTxt"></p>
+      </section>
+    </div>
+  </div>
+
+  <p class="note">Modelo docente. El cuerpo se trata como un medio uniforme y la componente del vector hacia el pecho es ilustrativa. El circuito sí se resuelve exacto: cada período del PWM de 62,5 kHz pasa por el filtro RC de dos etapas y el divisor.</p>
+</div>
+
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const fmt = (x, d = 2) => x.toFixed(d).replace('.', ',');
+const sg = (x, d = 2) => (x >= 0 ? '+' : '−') + fmt(Math.abs(x), d);
+const mod = (a, n) => ((a % n) + n) % n;
+
+/* =====================================================================
+   1. FIRMWARE — las mismas cuentas que hace la ESP32
+   ===================================================================== */
+const VDD = 3.3, G_FW = 0.952, PWM_MAX = 1023, LIMITE_MV = 1.35, S3 = Math.sqrt(3);
+const AMP_DI = [0.10, -0.03, 0.80, -0.05, 0.35], AMP_DII = [0.15, -0.12, 1.00, -0.30, 0.20], AMP_Z = [0.03, 0.08, -0.30, -0.25, 0.15];
+const V = AMP_DI.map((a, k) => [a, (2 * AMP_DII[k] - a) / S3, AMP_Z[k]]);
+const EJE_BASE = Math.atan2(V[2][1], V[2][0]) * 180 / Math.PI;
+const U = [[-0.5, -0.28868, 0], [0.5, -0.28868, 0], [0, 0.57735, 0]];
+const NOM = ['RA', 'LA', 'LL'];
+const ESC = [
+  { n: 'Normal', corto: 'Normal', eje: null, esp: false, c: [0, 1, 2] },
+  { n: 'Desviacion del eje a la izquierda', corto: 'Eje izquierdo', eje: -45, esp: false, c: [0, 1, 2] },
+  { n: 'Desviacion del eje a la derecha', corto: 'Eje derecho', eje: 115, esp: false, c: [0, 1, 2] },
+  { n: 'Cables RA y LA invertidos', corto: 'RA ↔ LA', eje: null, esp: false, c: [1, 0, 2] },
+  { n: 'Cables LA y LL invertidos', corto: 'LA ↔ LL', eje: null, esp: false, c: [0, 2, 1] },
+  { n: 'Dextrocardia', corto: 'Dextrocardia', eje: null, esp: true, c: [0, 1, 2] }];
+const BPM = [40, 60, 120, 180];
+
+const fw = { tipo: 'vector', aten: [1101, 1101], modo: 1, corriendo: true,
+             esc: 0, eje: null, espejo: false, L: U.map(r => r.slice()), libres: false, escala: 1,   // modo vector
+             amp: 1 };                                                                                  // 2 canales
+let out = null;                                   // tablas vigentes
+
+function mVaDuty(mv, aten, base) {
+  const c = Math.round((base + mv * aten / 1000) / (G_FW * VDD) * PWM_MAX);
+  return Math.max(0, Math.min(PWM_MAX, c));
+}
+function corazon(bpm, eje, espejo) {              // la flecha H(t) de un latido, a 1 kHz
+  const giro = eje === null ? 0 : (eje - EJE_BASE) * Math.PI / 180, co = Math.cos(giro), si = Math.sin(giro);
+  const v = V.map(p => [(p[0] * co - p[1] * si) * (espejo ? -1 : 1), p[0] * si + p[1] * co, p[2]]);
+  const N = Math.floor(60000 / bpm), k = Math.sqrt(N / 1000), R = 0.40 * N;
+  const cen = [R - 190 * k, R - 25, R, R + 25, R + 240 * k], an = [22 * k, 8, 9, 8, 40 * k];
+  const h = [new Float64Array(N), new Float64Array(N), new Float64Array(N)];
+  for (let i = 0; i < N; i++) for (let w = 0; w < 5; w++) {
+    const x = (i - cen[w]) / an[w], a = Math.exp(-0.5 * x * x);
+    h[0][i] += a * v[w][0]; h[1][i] += a * v[w][1]; h[2][i] += a * v[w][2];
+  }
+  for (const c of h) { const a = c[0], b = c[N - 1]; for (let i = 0; i < N; i++) c[i] -= a + (b - a) * i / (N - 1); }
+  return { N, idxR: Math.floor(R), h };
+}
+function construir() {                            // devuelve las tablas de duty y lo que "pide" el código
+  const vec = fw.tipo === 'vector', base = vec ? 1.55 : 0.80;
+  let N, idxR, h, mA, mB, escala = 1;
+  if (fw.modo === 4) {
+    N = 1000; idxR = 0; h = [new Float64Array(N), new Float64Array(N), new Float64Array(N)];
+    mA = new Float64Array(N); mB = new Float64Array(N);
+    for (let i = 0; i < 500; i++) mA[i] = mB[i] = 1;
+  } else {
+    ({ N, idxR, h } = corazon(BPM[fw.modo], vec ? fw.eje : null, vec && fw.espejo));
+    const L = vec ? fw.L : U, a = [0, 1, 2].map(j => L[1][j] - L[0][j]), b = [0, 1, 2].map(j => L[2][j] - L[0][j]);
+    mA = new Float64Array(N); mB = new Float64Array(N); let pico = 0;
+    for (let i = 0; i < N; i++) {
+      mA[i] = a[0] * h[0][i] + a[1] * h[1][i] + a[2] * h[2][i];
+      mB[i] = b[0] * h[0][i] + b[1] * h[1][i] + b[2] * h[2][i];
+      pico = Math.max(pico, Math.abs(mA[i]), Math.abs(mB[i]));
+    }
+    if (vec) { if (pico > LIMITE_MV) escala = LIMITE_MV / pico; } else escala = fw.amp;
+    for (let i = 0; i < N; i++) { mA[i] *= escala; mB[i] *= escala; }
+  }
+  const dA = new Uint16Array(N), dB = new Uint16Array(N);
+  for (let i = 0; i < N; i++) {
+    dA[i] = mVaDuty(fw.corriendo ? mA[i] : 0, fw.aten[0], base);
+    dB[i] = mVaDuty(fw.corriendo ? mB[i] : 0, fw.aten[1], base);
+  }
+  fw.escala = vec ? escala : 1;
+  return { N, idxR, h, mA, mB, dA, dB, base, d0: [mVaDuty(0, fw.aten[0], base), mVaDuty(0, fw.aten[1], base)] };
+}
+function informe() {                              // lo que la placa imprime en el Monitor Serie
+  const o = out, f = (x, d = 2) => (x >= 0 ? '+' : '') + x.toFixed(d);
+  if (fw.tipo === 'dos') {
+    if (fw.modo === 4) return ['Modo: CALIBRACION 1 Hz / 1 mV (DI y DII; DIII = 0)'];
+    return [`Modo: ${BPM[fw.modo]} lpm | R: DI ${(0.8 * fw.amp).toFixed(2)}, DII ${(1.0 * fw.amp).toFixed(2)}, DIII ${(0.2 * fw.amp).toFixed(2)} mV`];
+  }
+  const e = ESC[fw.esc]; let t = `# Escenario ${fw.esc}: ${e.n}`;
+  if (fw.eje !== null && fw.eje !== e.eje) t += ` + eje ${fw.eje.toFixed(0)}`;
+  if (fw.libres) t += ' + electrodos libres';
+  t += fw.modo === 4 ? ' | CALIBRACION 1 Hz / 1 mV' : ` | ${BPM[fw.modo]} lpm`;
+  const l = [t, fw.libres ? '#   Electrodos: posicion libre (enviada desde el PC)'
+    : '#   Electrodos: ' + [0, 1, 2].map(b => `borne ${NOM[b]} <- ${NOM[e.c[b]]}`).join(', ')];
+  if (fw.modo !== 4) {
+    const a = o.mA[o.idxR], b = o.mB[o.idxR], eje = Math.atan2((2 * b - a) / S3, a) * 180 / Math.PI;
+    l.push(`#   R en el monitor: DI ${f(a)}  DII ${f(b)}  DIII ${f(b - a)} mV | eje aparente ${f(eje, 0)} grados`);
+  }
+  if (fw.escala < 1) l.push(`# AVISO: senal reducida al ${(fw.escala * 100).toFixed(0)} % para que quepa en la salida`);
+  return l;
+}
+function aplicarEscenario(n) {
+  fw.esc = n; fw.eje = ESC[n].eje; fw.espejo = ESC[n].esp; fw.libres = false;
+  fw.L = ESC[n].c.map(c => U[c].slice());
+}
+function ejecutar(s) {                            // intérprete de comandos del modo vector
+  s = s.trim();
+  if (fw.tipo === 'dos') return ['(este código no lee comandos: usa los botones de la placa)'];
+  if (/^[0-5]$/.test(s)) { aplicarEscenario(+s); if (fw.modo === 4) fw.modo = 1; }
+  else if (s.startsWith('eje')) { const v = parseFloat(s.slice(3)); if (isNaN(v)) return ayuda(); fw.eje = v; if (fw.modo === 4) fw.modo = 1; }
+  else if (s.startsWith('ritmo')) { const m = parseInt(s.slice(5)); if (!(m >= 0 && m <= 4)) return []; fw.modo = m; }
+  else if (s.startsWith('lv')) {
+    const v = s.slice(2).trim().split(/\s+/).map(Number);
+    if (v.length !== 9 || v.some(isNaN)) return ['# lv necesita 9 numeros: x y z de RA, LA y LL'];
+    fw.L = [v.slice(0, 3), v.slice(3, 6), v.slice(6, 9)]; fw.libres = true;
+  }
+  else if (s.startsWith('plot')) return ['(en este banco las curvas ya se ven en pantalla)'];
+  else return ayuda();
+  recalcular(); return informe();
+}
+const ayuda = () => ['# Comandos: 0-5 escenario | eje <grados> | ritmo <0-4> | plot <0-2> | ?', ...ESC.map((e, i) => `#   ${i} ${e.n}`)];
+function arranque() {
+  recalcular();
+  if (fw.tipo === 'dos') return ['PWM OK: 62500 Hz, 10 bits, 2 canales (IO14 = LA, IO13 = LL)', ...informe(), 'Simulador listo.'];
+  return [`# PWM OK: 62500 Hz, 10 bits | MODO VECTOR v2 | eje normal = ${EJE_BASE >= 0 ? '+' : ''}${EJE_BASE.toFixed(0)} grados`, ...informe(), ...ayuda(), '# Simulador listo.'];
+}
+
+/* =====================================================================
+   2. CIRCUITO — PWM → R1/C1 → R2/C2 (TP) → R3/R4 (borne), solución exacta
+   ===================================================================== */
+const R1 = 1e3, C1 = 100e-9, R2 = 10e3, C2 = 10e-9, FPWM = 62500, TPWM = 1 / FPWM, NIV = 1024;
+const mul = (a, b) => [a[0] * b[0] + a[1] * b[2], a[0] * b[1] + a[1] * b[3], a[2] * b[0] + a[3] * b[2], a[2] * b[1] + a[3] * b[3]];
+function expm(A, t) {
+  let s = 0, n = Math.max(...A.map(Math.abs)) * t; while (n > 0.25) { n /= 2; s++; }
+  const k = t / 2 ** s, M = A.map(x => x * k); let R = [1, 0, 0, 1], T = [1, 0, 0, 1];
+  for (let i = 1; i <= 14; i++) { T = mul(T, M).map(x => x / i); R = R.map((x, j) => x + T[j]); }
+  for (; s > 0; s--) R = mul(R, R); return R;
+}
+function crearCircuito(R3, R4) {
+  const RL = R3 + R4, A = [-(1 / R1 + 1 / R2) / C1, 1 / (R2 * C1), 1 / (R2 * C2), -(1 / R2 + 1 / RL) / C2];
+  const det = A[0] * A[3] - A[1] * A[2], Ai = [A[3] / det, -A[1] / det, -A[2] / det, A[0] / det], B = [1 / (R1 * C1), 0];
+  const gam = P => { const m = mul(Ai, [P[0] - 1, P[1], P[2], P[3] - 1]); return [(m[0] * B[0] + m[1] * B[1]) * VDD, (m[2] * B[0] + m[3] * B[1]) * VDD]; };
+  const P1 = expm(A, TPWM / NIV), pot = [[1, 0, 0, 1]];
+  for (let d = 1; d <= NIV; d++) pot.push(mul(pot[d - 1], P1));
+  const M = new Float64Array(NIV * 4), c = new Float64Array(NIV * 2);   // un período entero con duty d
+  for (let d = 0; d < NIV; d++) {
+    const Ph = pot[d], Pl = pot[NIV - d], g = gam(Ph), m = mul(Pl, Ph);
+    M.set(m, d * 4); c[d * 2] = Pl[0] * g[0] + Pl[1] * g[1]; c[d * 2 + 1] = Pl[2] * g[0] + Pl[3] * g[1];
+  }
+  const fino = n => { const P = expm(A, TPWM / n); return { P, g: gam(P), n }; };
+  return { R3, R4, div: R4 / RL, G: RL / (R1 + R2 + RL), k1: 1 + R2 / RL, M, c, f32: fino(32), f128: fino(128) };
+}
+function simularLatido(duty, ck) {                // TP al final de cada período del PWM
+  const N = duty.length, per = Math.round(N * FPWM / 1000), tp = new Float32Array(per), M = ck.M, c = ck.c;
+  let v2 = duty[0] / NIV * VDD * ck.G, v1 = v2 * ck.k1;
+  for (let lat = 0; lat < 2; lat++) for (let n = 0; n < per; n++) {
+    const d = duty[Math.min(N - 1, Math.floor(n * TPWM * 1000))], i = d * 4, j = d * 2;
+    const a = M[i] * v1 + M[i + 1] * v2 + c[j], b = M[i + 2] * v1 + M[i + 3] * v2 + c[j + 1];
+    v1 = a; v2 = b; if (lat) tp[n] = v2;
+  }
+  return tp;
+}
+const ckt = [crearCircuito(220e3, 200), crearCircuito(220e3, 200)];
+let sim = null;                                   // resultado de la simulación vigente
+function recalcular() {
+  out = construir();
+  const o = out, tp = [simularLatido(o.dA, ckt[0]), simularLatido(o.dB, ckt[1])], per = tp[0].length;
+  const base = [0, 1].map(ch => o.d0[ch] / NIV * VDD * ckt[ch].G);
+  // lo que muestra el monitor: borne menos su nivel de 0 mV, paso bajo de ~150 Hz, a 1 kHz
+  const lead = [0, 1].map(ch => {
+    const w = 208, y = new Float32Array(o.N), k = ckt[ch].div * 1000; let acc = 0;
+    for (let i = -w; i < 0; i++) acc += tp[ch][mod(i, per)];
+    for (let n = 0, m = 0; n < per; n++) {
+      acc += tp[ch][n] - tp[ch][mod(n - w, per)];
+      if (n - w / 2 >= m * FPWM / 1000 && m < o.N) y[m++] = (acc / w - base[ch]) * k;
+    }
+    y[o.N - 1] = y[o.N - 2]; return y;
+  });
+  const prom = a => { let s = 0; for (let i = 0; i < a.length; i++) s += a[i]; return s / a.length; };
+  const ext = a => { let lo = 1e9, hi = -1e9; for (let i = 0; i < a.length; i++) { if (a[i] < lo) lo = a[i]; if (a[i] > hi) hi = a[i]; } return [lo, hi]; };
+  const kR = Math.min(o.N - 1, o.idxR + 1);
+  sim = { tp, per, lead, base, prom, ext, R: [lead[0][kR], lead[1][kR], lead[1][kR] - lead[0][kR]],
+          multi: [0, 1].map(ch => ({ pin: prom(ch ? o.dB : o.dA) / NIV * VDD, tp: prom(tp[ch]), borne: prom(tp[ch]) * ckt[ch].div * 1000 })) };
+  sucio = true; pintarLecturas();
+}
+
+/* =====================================================================
+   3. CUERPO — posiciones de las pinzas y su vector de derivación
+   ===================================================================== */
+const R0 = 24, RMIN = 7, XM = -3, A_T = 16, B_T = 10, Y_SUP = -17, Y_INF = 22;
+const ESTANDAR = U.map(u => u.map(c => c * S3 * R0));
+let pos = ESTANDAR.map(p => p.slice());
+function profundidad(x, y) {
+  const u = (x - XM) / A_T; if (Math.abs(u) >= 1 || y <= Y_SUP || y >= Y_INF) return 0;
+  const s = Math.min(1, Math.min(y - Y_SUP, Y_INF - y) / 4); return B_T * Math.sqrt(1 - u * u) * s * s * (3 - 2 * s);
+}
+function vectorDerivacion(p) {
+  const r = Math.hypot(...p); if (r < 1e-6) return [0, 0, 0];
+  const k = (R0 * R0 / S3) / (r * Math.max(r, RMIN) ** 2); return p.map(c => c * k);
+}
+const comandoLv = () => 'lv ' + pos.map(p => vectorDerivacion(p).map(x => x.toFixed(4)).join(' ')).join(' ');
+
+/* =====================================================================
+   4. PANTALLAS
+   ===================================================================== */
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function lienzo(cv) {                             // ajusta el canvas a su tamaño real en pantalla
+  const r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1, w = Math.max(50, Math.round(r.width)), h = Math.max(50, Math.round(r.height));
+  if (cv.width !== Math.round(w * d) || cv.height !== Math.round(h * d)) { cv.width = Math.round(w * d); cv.height = Math.round(h * d); }
+  const g = cv.getContext('2d'); g.setTransform(d, 0, 0, d, 0, 0); return { g, w, h };
+}
+let t = 0, corriendoSim = !matchMedia('(prefers-reduced-motion: reduce)').matches, sucio = true, vista = 'frente';
+const fase = () => mod(t, out.N / 1000);          // segundos dentro del latido
+const hAhora = () => { const i = Math.min(out.N - 1, Math.floor(fase() * 1000)); return fw.corriendo ? [out.h[0][i], out.h[1][i], out.h[2][i]] : [0, 0, 0]; };
+
+/* ---------- cuerpo ---------- */
+const CM = 14;                                    // largo de la flecha: cm por mV
+let az = -0.38, el = 0.2, agarrada = null, girando = null;
+function caja(g, x, y, w, h, r) { g.beginPath(); if (g.roundRect) g.roundRect(x, y, w, h, r); else g.rect(x, y, w, h); g.fill(); g.stroke(); }
+function proy3(p, w, h, s) {                      // (x izq, y pies, z pecho) -> pantalla
+  const X = p[0] - XM, Y = -(p[1] + 5), Z = p[2];
+  const x1 = X * Math.cos(az) + Z * Math.sin(az), z1 = -X * Math.sin(az) + Z * Math.cos(az);
+  return [w / 2 + s * x1, h / 2 - s * (Y * Math.cos(el) + z1 * Math.sin(el))];
+}
+function dibujarCuerpo() {
+  const cv = $('cvBody'), { g, w, h } = lienzo(cv), s = Math.min(w / 66, h / 88);
+  g.clearRect(0, 0, w, h);
+  const P = vista === 'frente' ? p => [w / 2 + s * (p[0] + 3), h / 2 + s * (p[1] - 6)] : p => proy3(p, w, h, s * 1.15);
+  const piel = css('--skin'), borde = css('--skin-line'), tinta = css('--ink'), col = [css('--ch1'), css('--ch2'), css('--ch3')], vec = css('--vec');
+  g.lineWidth = 1.2; g.fillStyle = piel; g.strokeStyle = borde;
+  if (vista === 'frente') {
+    const X = x => w / 2 + s * (x + 3), Y = y => h / 2 + s * (y - 6);
+    g.beginPath(); g.arc(X(XM), Y(-27.5), 7.5 * s, 0, 7); g.fill(); g.stroke();
+    caja(g, X(XM - 3), Y(-21), 6 * s, 5 * s, s);
+    caja(g, X(XM - A_T - 8.5), Y(Y_SUP + 1), 7.5 * s, 36 * s, 3.5 * s); caja(g, X(XM + A_T + 1), Y(Y_SUP + 1), 7.5 * s, 36 * s, 3.5 * s);
+    caja(g, X(XM - A_T + 0.5), Y(Y_INF + 1), (A_T - 1) * s, 28 * s, 5 * s); caja(g, X(XM + 0.5), Y(Y_INF + 1), (A_T - 1) * s, 28 * s, 5 * s);
+    caja(g, X(XM - A_T), Y(Y_SUP), 2 * A_T * s, (Y_INF - Y_SUP) * s, 5 * s);
+    g.fillStyle = css('--muted'); g.font = '11px ' + css('--f-body'); g.textAlign = 'left'; g.fillText('derecha del paciente', 4, 14);
+    g.textAlign = 'right'; g.fillText('izquierda del paciente', w - 4, 14);
+  } else {
+    g.lineWidth = 0.8;
+    const anillo = (cx, y, a, b) => { g.beginPath(); for (let k = 0; k <= 48; k++) { const q = k / 48 * 2 * Math.PI, p = P([cx + a * Math.cos(q), y, b * Math.sin(q)]); k ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1]); } g.stroke(); };
+    for (let y = Y_SUP; y <= Y_INF + 0.1; y += 3.9) anillo(XM, y, A_T, B_T);
+    for (let k = 0; k < 12; k++) { const q = k / 12 * 2 * Math.PI, a = P([XM + A_T * Math.cos(q), Y_SUP, B_T * Math.sin(q)]), b = P([XM + A_T * Math.cos(q), Y_INF, B_T * Math.sin(q)]); g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke(); }
+    for (let la = -60; la <= 60; la += 30) { const r = 7.5 * Math.cos(la * Math.PI / 180); anillo(XM, -27.5 - 7.5 * Math.sin(la * Math.PI / 180), r, r); }
+  }
+  // lados del triángulo: I, II, III
+  [[0, 1], [0, 2], [1, 2]].forEach(([i, j], k) => { const a = P(pos[i]), b = P(pos[j]); g.strokeStyle = col[k]; g.lineWidth = 1.6; g.globalAlpha = 0.85; g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke(); g.globalAlpha = 1; });
+  // recorrido de la flecha y flecha
+  const o = out, c0 = P([0, 0, 0]);
+  if (fw.corriendo && fw.modo !== 4) {
+    g.strokeStyle = vec; g.globalAlpha = 0.45; g.lineWidth = 1.2; g.beginPath();
+    for (let i = 0; i < o.N; i += 2) { const p = P([o.h[0][i] * CM, o.h[1][i] * CM, o.h[2][i] * CM]); i ? g.lineTo(p[0], p[1]) : g.moveTo(p[0], p[1]); }
+    g.stroke(); g.globalAlpha = 1;
+  }
+  const H = hAhora(), tip = P(H.map(x => x * CM));
+  g.strokeStyle = vec; g.fillStyle = vec; g.lineWidth = 3; g.lineCap = 'round'; g.beginPath(); g.moveTo(c0[0], c0[1]); g.lineTo(tip[0], tip[1]); g.stroke();
+  const an = Math.atan2(tip[1] - c0[1], tip[0] - c0[0]), L = Math.hypot(tip[0] - c0[0], tip[1] - c0[1]);
+  if (L > 6) { g.beginPath(); g.moveTo(tip[0], tip[1]); g.lineTo(tip[0] - 9 * Math.cos(an - 0.4), tip[1] - 9 * Math.sin(an - 0.4)); g.lineTo(tip[0] - 9 * Math.cos(an + 0.4), tip[1] - 9 * Math.sin(an + 0.4)); g.fill(); }
+  g.fillStyle = css('--led'); g.beginPath(); g.arc(c0[0], c0[1], 4.5, 0, 7); g.fill();
+  // pinzas
+  pos.forEach((p, b) => {
+    const q = P(p), movida = Math.hypot(p[0] - ESTANDAR[b][0], p[1] - ESTANDAR[b][1]) > 0.01;
+    g.fillStyle = movida ? vec : css('--panel'); g.strokeStyle = tinta; g.lineWidth = 1.6;
+    g.beginPath(); g.arc(q[0], q[1], 11, 0, 7); g.fill(); g.stroke();
+    g.fillStyle = movida ? '#1a1206' : tinta; g.font = '600 10px ' + css('--f-mono'); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(NOM[b], q[0], q[1] + 0.5); g.textBaseline = 'alphabetic';
+  });
+}
+function cmDesde(ev) {
+  const cv = $('cvBody'), r = cv.getBoundingClientRect(), s = Math.min(r.width / 66, r.height / 88);
+  return [(ev.clientX - r.left - r.width / 2) / s - 3, (ev.clientY - r.top - r.height / 2) / s + 6];
+}
+function moverPinza(b, x, y) { x = Math.max(-34, Math.min(28, x)); y = Math.max(-36, Math.min(48, y)); pos[b] = [x, y, profundidad(x, y)]; }
+function enviarPinzas(registrar) {
+  const c = comandoLv(), l = ejecutar(c);
+  if (registrar) { escribir('> ' + c, 'tx'); l.forEach(x => escribir(x)); }
+  sincronizar();
+}
+(() => {
+  const cv = $('cvBody');
+  cv.addEventListener('pointerdown', ev => {
+    cv.setPointerCapture(ev.pointerId);
+    if (vista === '3d') { girando = [ev.clientX, ev.clientY, az, el]; return; }
+    if (fw.tipo !== 'vector') return;
+    const [x, y] = cmDesde(ev), d = pos.map(p => Math.hypot(p[0] - x, p[1] - y)), m = Math.min(...d);
+    if (m < 4.5) { agarrada = d.indexOf(m); cv.style.cursor = 'grabbing'; }
+  });
+  cv.addEventListener('pointermove', ev => {
+    if (girando) { az = girando[2] + (ev.clientX - girando[0]) * 0.01; el = Math.max(-1.2, Math.min(1.2, girando[3] + (ev.clientY - girando[1]) * 0.01)); return; }
+    if (agarrada === null) return;
+    const [x, y] = cmDesde(ev); moverPinza(agarrada, x, y); enviarPinzas(false);
+  });
+  const soltar = () => {
+    girando = null; cv.style.cursor = 'grab';
+    if (agarrada === null) return;
+    const b = agarrada; agarrada = null;
+    for (const e of ESTANDAR) if (Math.hypot(pos[b][0] - e[0], pos[b][1] - e[1]) < 2) pos[b] = e.slice();
+    enviarPinzas(true);
+  };
+  cv.addEventListener('pointerup', soltar); cv.addEventListener('pointercancel', soltar);
+})();
+
+/* ---------- monitor de ECG ---------- */
+const VENT = 4, FSM = 250, NB = VENT * FSM, buf = [new Float32Array(NB), new Float32Array(NB)]; let wp = 0, tUlt = 0, limMon = 1.5;
+function alimentarMonitor() {
+  const dt = 1 / FSM;
+  while (tUlt + dt <= t) {
+    tUlt += dt; const i = Math.min(out.N - 1, Math.floor(mod(tUlt, out.N / 1000) * 1000));
+    buf[0][wp] = sim.lead[0][i]; buf[1][wp] = sim.lead[1][i]; wp = (wp + 1) % NB;
+  }
+}
+function dibujarMonitor() {
+  const { g, w, h } = lienzo($('cvMon')); g.fillStyle = css('--scr'); g.fillRect(0, 0, w, h);
+  let pico = 0; for (let i = 0; i < NB; i++) pico = Math.max(pico, Math.abs(buf[0][i]), Math.abs(buf[1][i]), Math.abs(buf[1][i] - buf[0][i]));
+  limMon = pico > 1.45 ? 3 : 1.5; const paso = limMon > 2 ? 1 : 0.5;
+  $('monEsc').textContent = `25 mm/s · ${fmt(paso, 1)} mV por línea`;
+  const fh = h / 3, col = [css('--ch1'), css('--ch2'), css('--ch3')], nom = ['DI', 'DII', 'DIII'];
+  g.strokeStyle = css('--scr-grid'); g.lineWidth = 1;
+  for (let x = 0; x <= VENT * 5; x++) { const X = Math.round(x / (VENT * 5) * w) + 0.5; g.beginPath(); g.moveTo(X, 0); g.lineTo(X, h); g.stroke(); }
+  for (let k = 0; k < 3; k++) {
+    const y0 = fh * (k + 0.5), esc = fh * 0.46 / limMon;
+    for (let v = -limMon; v <= limMon + 1e-9; v += paso) { const Y = Math.round(y0 - v * esc) + 0.5; g.globalAlpha = Math.abs(v) < 1e-9 ? 1 : 0.5; g.beginPath(); g.moveTo(0, Y); g.lineTo(w, Y); g.stroke(); }
+    g.globalAlpha = 1; g.strokeStyle = col[k]; g.lineWidth = 1.7; g.beginPath(); let abierto = false;
+    for (let i = 0; i < NB; i++) {
+      const edad = mod(wp - 1 - i, NB); if (edad > NB - 14) { abierto = false; continue; }       // barra de borrado
+      const v = k === 0 ? buf[0][i] : k === 1 ? buf[1][i] : buf[1][i] - buf[0][i], X = i / NB * w, Y = y0 - v * esc;
+      abierto ? g.lineTo(X, Y) : g.moveTo(X, Y); abierto = true;
+    }
+    g.stroke(); g.strokeStyle = css('--scr-grid'); g.lineWidth = 1;
+    g.fillStyle = col[k]; g.font = '600 12px ' + css('--f-mono'); g.textAlign = 'left'; g.fillText(nom[k], 8, fh * k + 16);
+  }
+}
+
+/* ---------- osciloscopio ---------- */
+const VDIVS = [0.001, 0.002, 0.005, 0.01, 0.05, 0.1, 0.2, 0.5, 1], TDIVS = [5e-6, 20e-6, 200e-6, 1e-3, 20e-3, 100e-3, 200e-3, 500e-3];
+const sc = { punta: 'tp', vdiv: 0.5, tdiv: 0.2, ac: false, math: true, hpos: 0.4, p: [0, -2.7, 2.7] };
+const uni = (x, u) => x < 1e-3 ? fmt(x * 1e6, 0) + ' µ' + u : x < 1 ? fmt(x * 1e3, 0) + ' m' + u : fmt(x, 0) + ' ' + u;
+function trazaFina(ch, t0, W, n) {                // con el PWM visible dentro de cada período
+  const ck = ckt[ch], f = W <= 6e-4 ? ck.f128 : ck.f32, h = TPWM / f.n, duty = ch ? out.dB : out.dA, RR = out.N / 1000;
+  const k0 = Math.floor((t0 - 2e-3) / h), dAt = k => duty[Math.min(out.N - 1, Math.floor(mod(k * h, RR) * 1000))];
+  let k = k0, v2 = dAt(k) / NIV * VDD * ck.G, v1 = v2 * ck.k1, u = 0; const y = new Float32Array(n), P = f.P, gm = f.g;
+  for (let px = 0; px < n; px++) {
+    const kObj = Math.floor((t0 + (px + 0.5) / n * W) / h);
+    for (; k <= kObj; k++) {
+      const per = Math.floor(k / f.n), d = duty[Math.min(out.N - 1, Math.floor(mod(per * TPWM, RR) * 1000))];
+      u = (k - per * f.n) < d * f.n / NIV ? 1 : 0;
+      const a = P[0] * v1 + P[1] * v2 + gm[0] * u, b = P[2] * v1 + P[3] * v2 + gm[1] * u; v1 = a; v2 = b;
+    }
+    y[px] = sc.punta === 'pin' ? u * VDD : sc.punta === 'borne' ? v2 * ck.div : v2;
+  }
+  return y;
+}
+function trazaLenta(ch, t0, W, n) {
+  const y = new Float32Array(n), RR = out.N / 1000, duty = ch ? out.dB : out.dA, k = sc.punta === 'borne' ? ckt[ch].div : 1;
+  for (let px = 0; px < n; px++) {
+    const f = mod(t0 + (px + 0.5) / n * W, RR);
+    y[px] = sc.punta === 'pin' ? duty[Math.min(out.N - 1, Math.floor(f * 1000))] / NIV * VDD : sim.tp[ch][Math.min(sim.per - 1, Math.floor(f * FPWM))] * k;
+  }
+  return y;
+}
+function dibujarScope() {
+  const { g, w, h } = lienzo($('cvScope')), W = 12 * sc.tdiv, n = Math.floor(w), t0 = sc.hpos - W / 2, fina = sc.tdiv < 5e-3;
+  g.fillStyle = css('--scr'); g.fillRect(0, 0, w, h); g.strokeStyle = css('--scr-grid'); g.lineWidth = 1;
+  for (let i = 0; i <= 12; i++) { const X = Math.round(i / 12 * (w - 1)) + 0.5; g.globalAlpha = i === 6 ? 1 : 0.6; g.beginPath(); g.moveTo(X, 0); g.lineTo(X, h); g.stroke(); }
+  for (let i = 0; i <= 8; i++) { const Y = Math.round(i / 8 * (h - 1)) + 0.5; g.globalAlpha = i === 4 ? 1 : 0.6; g.beginPath(); g.moveTo(0, Y); g.lineTo(w, Y); g.stroke(); }
+  g.globalAlpha = 1;
+  const tr = [0, 1].map(ch => (fina ? trazaFina : trazaLenta)(ch, t0, W, n));
+  if (sc.ac) tr.forEach(y => { const m = sim.prom(y); for (let i = 0; i < n; i++) y[i] -= m; });
+  const m3 = new Float32Array(n); for (let i = 0; i < n; i++) m3[i] = tr[1][i] - tr[0][i];
+  const col = [css('--ch1'), css('--ch2'), css('--ch3')], dv = h / 8, Y = (v, k) => h / 2 - (sc.p[k] + v / sc.vdiv) * dv;
+  const lista = sc.math ? [[m3, 2], [tr[0], 0], [tr[1], 1]] : [[tr[0], 0], [tr[1], 1]];
+  for (const [y, k] of lista) {
+    if (sc.punta === 'pin' && !fina && k < 2) {   // PWM crudo a escala lenta: una franja entre 0 y 3,3 V, como en un osciloscopio real
+      g.fillStyle = col[k]; g.globalAlpha = 0.4; const off = sc.ac ? -sim.multi[k].pin : 0; g.fillRect(0, Y(VDD + off, k), w, Y(off, k) - Y(VDD + off, k)); g.globalAlpha = 1;
+    }
+    if (sc.punta === 'pin' && !fina) {             // a esta escala los pulsos no se distinguen: solo la franja
+      if (k < 2) { const y0 = Math.max(6, Math.min(h - 6, Y(0, k))); g.fillStyle = col[k]; g.beginPath(); g.moveTo(0, y0 - 6); g.lineTo(9, y0); g.lineTo(0, y0 + 6); g.fill(); }
+      continue;
+    }
+    g.strokeStyle = col[k]; g.lineWidth = 1.5; g.beginPath();
+    for (let i = 0; i < n; i++) { const yy = Math.max(-2, Math.min(h + 2, Y(y[i], k))); i ? g.lineTo(i, yy) : g.moveTo(i, yy); }
+    g.stroke();
+    const y0 = Math.max(6, Math.min(h - 6, Y(0, k)));            // marcador de 0 V
+    g.fillStyle = col[k]; g.beginPath(); g.moveTo(0, y0 - 6); g.lineTo(9, y0); g.lineTo(0, y0 + 6); g.fill();
+  }
+  g.font = '600 11px ' + css('--f-mono'); g.textAlign = 'left'; g.fillStyle = css('--scr-ink');
+  g.fillText(`${uni(sc.vdiv, 'V')}/div · ${uni(sc.tdiv, 's')}/div · ${sc.ac ? 'AC' : 'DC'} · X1`, 14, 15);
+  g.textAlign = 'right'; g.fillText(fina ? 'detalle del PWM' : 'Trig: Normal', w - 8, 15);
+  // lecturas (como la tecla PRM), sobre un latido completo
+  const k = [0, 1].map(ch => sc.punta === 'borne' ? ckt[ch].div : 1), e = [0, 1].map(ch => sc.punta === 'pin' ? [0, VDD] : sim.ext(sim.tp[ch]).map(v => v * k[ch]));
+  const u = sc.punta === 'borne' ? ['mV', 1000, 3] : ['V', 1, 3], f = fw.modo === 4 ? 1 : BPM[fw.modo] / 60;
+  const nomP = { tp: ['TP_LA', 'TP_LL'], pin: ['IO14', 'IO13'], borne: ['LA', 'LL'] }[sc.punta];
+  $('scRead').innerHTML = [0, 1].map(ch => `<span class="c${ch + 1}"><b>CH${ch + 1}</b> ${nomP[ch]} · máx ${fmt(e[ch][1] * u[1], u[2])} · mín ${fmt(e[ch][0] * u[1], u[2])} ${u[0]}</span>`).join('')
+    + `<span class="c3"><b>Frecuencia</b> ${fmt(f, 2)} Hz · ${fw.modo === 4 ? 'calibración' : BPM[fw.modo] + ' lpm'}</span>`;
+  $('scNote').textContent = sc.punta === 'borne' ? 'En los bornes la señal es de milivolts. Tu osciloscopio real no baja de 10 mV por división, así que ahí solo verías ruido: mide en los TP.'
+    : sc.punta === 'pin' ? 'En el pin se ve el PWM crudo: pulsos de 0 a 3,3 V a 62,5 kHz. Baja el tiempo a 5 o 20 µs por división para ver cómo cambia el ancho.'
+    : fina ? 'Con este tiempo por división se ve el rizado que deja el PWM después del filtro: unos 2,6 mV de pico a pico.' : `Altura en el TP = ${fmt(out.base, 2)} V + (mV del borne × 1,101).`;
+}
+function autoScope() {
+  sc.punta = $('punta').value; sc.ac = false; sc.tdiv = 0.2; sc.hpos = (out.idxR || 250) / 1000; sc.math = true;
+  const k = [0, 1].map(ch => sc.punta === 'borne' ? ckt[ch].div : 1), e = [0, 1].map(ch => sc.punta === 'pin' ? [0, VDD] : sim.ext(sim.tp[ch]).map(v => v * k[ch]));
+  const d = new Float32Array(sim.per); for (let i = 0; i < sim.per; i++) d[i] = sim.tp[1][i] * k[1] - sim.tp[0][i] * k[0];
+  const e3 = sc.punta === 'pin' ? [-VDD, VDD] : sim.ext(d), pp = Math.max(e[0][1] - e[0][0], e[1][1] - e[1][0], e3[1] - e3[0], 1e-6);
+  sc.vdiv = VDIVS.find(v => pp / v <= 3.0) || 1;
+  const cen = [0, -2.7, 2.7]; [e[0], e[1], e3].forEach((x, i) => sc.p[i] = Math.max(-14, Math.min(14, cen[i] - (x[0] + x[1]) / 2 / sc.vdiv)));
+  reflejarScope(); sucio = true;
+}
+function reflejarScope() {
+  $('vdiv').value = sc.vdiv; $('tdiv').value = sc.tdiv; $('acople').value = sc.ac ? 'ac' : 'dc'; $('math').checked = sc.math; $('punta').value = sc.punta;
+  $('hpos').max = out.N; $('hpos').value = Math.round(sc.hpos * 1000); $('hposTxt').textContent = Math.round(sc.hpos * 1000) + ' ms';
+  ['p1', 'p2', 'p3'].forEach((id, i) => $(id).value = sc.p[i]);
+}
+
+/* =====================================================================
+   5. PANEL DE LA PLACA Y LECTURAS
+   ===================================================================== */
+const lineas = [];
+function escribir(txt, cls) { lineas.push([txt, cls]); if (lineas.length > 160) lineas.shift(); const p = $('log'); p.textContent = ''; for (const [l, c] of lineas) { const s = document.createElement('span'); if (c) s.className = c; s.textContent = l + '\n'; p.appendChild(s); } p.scrollTop = p.scrollHeight; }
+function pintarLecturas() {
+  if (!sim) return; const m = sim.multi, bp = ch => out.d0[ch] / NIV * VDD, bt = ch => sim.base[ch];
+  $('multi').innerHTML = `<tr><td>Pin IO14 / IO13</td><td class="n">${fmt(bp(0), 2)} V</td><td class="n">${fmt(bp(1), 2)} V</td></tr>
+    <tr><td>Punto de prueba (TP)</td><td class="n">${fmt(bt(0), 2)} V</td><td class="n">${fmt(bt(1), 2)} V</td></tr>
+    <tr><td>Borne</td><td class="n">${fmt(bt(0) * ckt[0].div * 1000, 2)} mV</td><td class="n">${fmt(bt(1) * ckt[1].div * 1000, 2)} mV</td></tr>`;
+  $('multiNota').textContent = !fw.corriendo ? 'Salida detenida: el multímetro marca justo estos valores.'
+    : `Valores de la línea base, entre latidos. Con latidos el multímetro oscila y su promedio en los TP queda en ${fmt(m[0].tp, 2)} V (LA) y ${fmt(m[1].tp, 2)} V (LL).`;
+  const R = sim.R, cal = fw.modo === 4, quieto = !fw.corriendo;
+  $('monRead').innerHTML = quieto ? '<span>Salida detenida: línea base en los dos bornes.</span>'
+    : cal ? '<span class="c1"><b>DI</b> escalón de 1 mV</span><span class="c2"><b>DII</b> escalón de 1 mV</span><span class="c3"><b>DIII</b> 0 mV</span>'
+    : ['DI', 'DII', 'DIII'].map((n, i) => `<span class="c${i + 1}"><b>R en ${n}</b> ${sg(R[i], 2)} mV</span>`).join('');
+  const av = $('aviso'); av.hidden = !(fw.tipo === 'vector' && fw.escala < 1);
+  if (!av.hidden) av.textContent = `La pinza quedó muy cerca del corazón. La placa redujo la señal al ${fmt(fw.escala * 100, 0)} % para que quepa en la salida.`;
+  // calibración: ¿qué tan lejos queda DIII de lo que pide el código?
+  const o = out, i = Math.min(o.N - 1, o.idxR), ped = o.mB[i] - o.mA[i], real = [0, 1].map(ch => fw.aten[ch] / ((ckt[ch].R3 + ckt[ch].R4) / ckt[ch].R4));
+  const ct = $('calTxt');
+  if (cal || quieto) ct.textContent = 'Pon un ritmo con latidos para ver el efecto de la calibración sobre DIII.';
+  else {
+    const err = Math.abs(ped) > 0.02 ? Math.abs(R[2] - ped) / Math.abs(ped) * 100 : null, bien = real.every(x => Math.abs(x - 1) < 0.004);
+    ct.textContent = `El código pide R en DIII de ${sg(ped, 2)} mV y en los bornes sale ${sg(R[2], 2)} mV` + (err === null ? '.' : ` (${fmt(err, 0)} % de error).`)
+      + (bien ? ' El código coincide con las resistencias.' : ' El código no coincide con las resistencias reales: pulsa "Calibrar el código".');
+  }
+}
+function sincronizar() {                          // la interfaz refleja el estado de la placa
+  const vec = fw.tipo === 'vector';
+  $('fwVec').classList.toggle('on', vec); $('fwDos').classList.toggle('on', !vec);
+  $('ctlVec').hidden = !vec; $('ctlDos').hidden = vec;
+  $('bodyHint').textContent = vista === '3d' ? 'Arrastra para girar el modelo.' : vec ? 'Arrastra una pinza. Al soltarla cerca de su lugar normal, se pega a él.' : 'Con este código las pinzas están fijas en su lugar normal.';
+  document.querySelectorAll('#chips button').forEach((b, i) => { const on = vec && fw.esc === i && !fw.libres && (fw.eje === ESC[i].eje); b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+  const eje = fw.eje === null ? EJE_BASE : fw.eje;
+  if (document.activeElement !== $('eje')) $('eje').value = Math.round(eje / 5) * 5; $('ejeTxt').textContent = sg(eje, 0) + '°' + (fw.espejo ? ' (en espejo)' : '');
+  $('ritmo').value = fw.modo;
+  if (vec && !fw.libres && agarrada === null) pos = ESC[fw.esc].c.map(c => ESTANDAR[c].slice());
+  if (!vec) pos = ESTANDAR.map(p => p.slice());
+  const B = vec ? [['IO15', 'Ritmo', 'ritmo'], ['IO2', 'Escenario', 'esc'], ['IO12', fw.corriendo ? 'Detener' : 'Iniciar', 'run']]
+    : [['IO15', 'Modo', 'ritmo'], ['IO2', fw.amp === 1 ? 'Amplitud ×2' : 'Amplitud ×1', 'amp'], ['IO12', fw.corriendo ? 'Detener' : 'Iniciar', 'run']];
+  $('botones').innerHTML = B.map(b => `<button data-b="${b[2]}"><span class="pin">botón ${b[0]}</span>${b[1]}</button>`).join('') + '<button data-b="rst"><span class="pin">placa</span>RST</button>';
+  $('hpos').max = out.N; if (sc.hpos * 1000 > out.N) { sc.hpos = out.idxR / 1000; reflejarScope(); }
+}
+function boton(b) {
+  if (b === 'rst') { reiniciar(); return; }
+  if (b === 'run') { fw.corriendo = !fw.corriendo; recalcular(); escribir(fw.tipo === 'vector' ? (fw.corriendo ? '# RUN' : '# STOP') : (fw.corriendo ? 'RUN' : 'STOP')); }
+  else {
+    if (b === 'ritmo') fw.modo = (fw.modo + 1) % 5;
+    if (b === 'amp') fw.amp = fw.amp === 1 ? 2 : 1;
+    if (b === 'esc') { aplicarEscenario((fw.esc + 1) % 6); if (fw.modo === 4) fw.modo = 1; }
+    recalcular(); informe().forEach(l => escribir(l));
+  }
+  sincronizar();
+}
+function reiniciar() {
+  Object.assign(fw, { modo: 1, corriendo: true, amp: 1 }); aplicarEscenario(0);
+  lineas.length = 0; escribir('rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)'); arranque().forEach(l => escribir(l));
+  $('punta').value = 'tp'; sincronizar(); autoScope();
+}
+function comando(s, eco = true) { if (eco) escribir('> ' + s, 'tx'); ejecutar(s).forEach(l => escribir(l)); sincronizar(); }
+
+/* =====================================================================
+   6. CONEXIONES DE LA INTERFAZ
+   ===================================================================== */
+$('chips').innerHTML = ESC.map((e, i) => `<button data-e="${i}"><span class="pin">${i}</span>${e.corto}</button>`).join('');
+$('chips').addEventListener('click', ev => { const b = ev.target.closest('button'); if (b) comando(b.dataset.e); });
+$('botones').addEventListener('click', ev => { const b = ev.target.closest('button'); if (b) boton(b.dataset.b); });
+$('eje').addEventListener('input', ev => comando('eje ' + ev.target.value, false));
+$('eje').addEventListener('change', ev => { escribir('> eje ' + ev.target.value, 'tx'); informe().forEach(l => escribir(l)); });
+$('ritmo').addEventListener('change', ev => comando('ritmo ' + ev.target.value));
+$('reponer').addEventListener('click', () => comando(String(fw.esc)));
+$('frm').addEventListener('submit', ev => { ev.preventDefault(); const v = $('cmd').value.trim(); if (v) comando(v); $('cmd').value = ''; });
+$('fwVec').addEventListener('click', () => { fw.tipo = 'vector'; reiniciar(); });
+$('fwDos').addEventListener('click', () => { fw.tipo = 'dos'; reiniciar(); });
+$('btnPausa').addEventListener('click', () => { corriendoSim = !corriendoSim; pintarPausa(); });
+const pintarPausa = () => { $('btnPausa').textContent = corriendoSim ? 'Pausar' : 'Continuar'; $('btnPausa').setAttribute('aria-pressed', !corriendoSim); };
+$('vFrente').addEventListener('click', () => { vista = 'frente'; $('vFrente').classList.add('on'); $('v3d').classList.remove('on'); sincronizar(); });
+$('v3d').addEventListener('click', () => { vista = '3d'; $('v3d').classList.add('on'); $('vFrente').classList.remove('on'); sincronizar(); });
+
+$('vdiv').innerHTML = VDIVS.map(v => `<option value="${v}">${uni(v, 'V')}</option>`).join('');
+$('tdiv').innerHTML = TDIVS.map(v => `<option value="${v}">${uni(v, 's')}</option>`).join('');
+$('vdiv').addEventListener('change', ev => { sc.vdiv = +ev.target.value; sucio = true; });
+$('tdiv').addEventListener('change', ev => { sc.tdiv = +ev.target.value; sucio = true; });
+$('acople').addEventListener('change', ev => { sc.ac = ev.target.value === 'ac'; sucio = true; });
+$('punta').addEventListener('change', () => autoScope());
+$('math').addEventListener('change', ev => { sc.math = ev.target.checked; sucio = true; });
+$('hpos').addEventListener('input', ev => { sc.hpos = ev.target.value / 1000; $('hposTxt').textContent = ev.target.value + ' ms'; sucio = true; });
+['p1', 'p2', 'p3'].forEach((id, i) => $(id).addEventListener('input', ev => { sc.p[i] = +ev.target.value; sucio = true; }));
+$('auto').addEventListener('click', () => { $('punta').value = 'tp'; autoScope(); });
+$('preRiz').addEventListener('click', () => { Object.assign(sc, { punta: 'tp', ac: true, vdiv: 0.001, tdiv: 5e-6, hpos: 0.05, math: false, p: [1.8, -1.8, 0] }); reflejarScope(); sucio = true; });
+$('prePin').addEventListener('click', () => { Object.assign(sc, { punta: 'pin', ac: false, vdiv: 1, tdiv: 5e-6, hpos: 0.05, math: false, p: [0.2, -3.7, 0] }); reflejarScope(); sucio = true; });
+
+function leerCircuito() {
+  const v = id => Math.max(1, +$(id).value || 1);
+  ckt[0] = crearCircuito(v('r3a'), v('r4a')); ckt[1] = crearCircuito(v('r3b'), v('r4b')); fw.aten = [v('ata'), v('atb')];
+  recalcular(); sincronizar();
+}
+['r3a', 'r4a', 'r3b', 'r4b', 'ata', 'atb'].forEach(id => $(id).addEventListener('change', leerCircuito));
+const poner = (a, b, c, d, e, f) => { $('r3a').value = a; $('r4a').value = b; $('r3b').value = c; $('r4b').value = d; if (e) { $('ata').value = e; $('atb').value = f; } leerCircuito(); };
+$('cNom').addEventListener('click', () => poner(220000, 200, 220000, 200, 1101, 1101));
+$('cMal').addEventListener('click', () => poner(231000, 190, 209000, 210));
+$('cCal').addEventListener('click', () => { const a = (id3, id4) => ((+$(id3).value + +$(id4).value) / +$(id4).value).toFixed(1); $('ata').value = a('r3a', 'r4a'); $('atb').value = a('r3b', 'r4b'); leerCircuito(); });
+
+/* =====================================================================
+   7. BUCLE
+   ===================================================================== */
+let antes = null;
+function cuadro(ms) {
+  if (antes !== null && corriendoSim) t += Math.min(0.1, (ms - antes) / 1000);
+  antes = ms;
+  alimentarMonitor(); dibujarMonitor(); dibujarCuerpo();
+  if (sucio) { dibujarScope(); sucio = false; }
+  const d = Math.floor(fase() * 1000) - out.idxR; $('led').classList.toggle('on', fw.corriendo && d >= 0 && d < 60);
+  requestAnimationFrame(cuadro);
+}
+new ResizeObserver(() => { sucio = true; }).observe($('cvScope'));
+new MutationObserver(() => { sucio = true; }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { sucio = true; });
+
+reiniciar(); pintarPausa();
+t = VENT + 0.45;                                 // arranca con la pantalla del monitor ya llena
+alimentarMonitor();
+requestAnimationFrame(cuadro);
+
+// para pruebas: acceso a las tablas y a los comandos
+window.banco = { fw, cmd: s => { ejecutar(s); sincronizar(); }, tablas: () => out, sim: () => sim, mover: (b, x, y) => { moverPinza(b, x, y); enviarPinzas(false); }, tiempo: v => { t = v; tUlt = Math.max(0, v - VENT); wp = 0; alimentarMonitor(); }, scope: sc, redibujar: () => { reflejarScope(); sucio = true; } };
+})();
+</script>
+
+</body></html>
