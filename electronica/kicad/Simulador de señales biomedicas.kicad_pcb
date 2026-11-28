@@ -7,6 +7,10 @@
 		(legacy_teardrops no)
 	)
 	(paper "A4")
+	(title_block
+		(title "ECG Simulator Vo3")
+		(date "2026-11-28")
+	)
 	(layers
 		(0 "F.Cu" signal)
 		(2 "B.Cu" signal)
@@ -84,7 +88,7 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "../outputs/GERBER/")
+			(outputdirectory "../outputs/Gerber/")
 		)
 	)
 	(footprint "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
@@ -152,7 +156,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/95459fb5-5190-431b-a43d-b38c6f3c357e")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -321,7 +325,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/f544468d-194e-4482-b1bc-248bc698b0cc")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -494,7 +498,7 @@
 		(property ki_fp_filters "Pin* Test*")
 		(path "/47cf8653-863d-41f9-94c5-230fbf65bc9b")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -613,7 +617,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/8d695259-7088-44b0-b426-d703d98ccf4f")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -793,7 +797,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/fafe30a8-686f-4620-9752-4134da6e6cc2")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -973,7 +977,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/dc06ba4c-2ca9-4651-8871-9cb2b39b98a5")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1164,7 +1168,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/940b1a07-49c7-4d1c-a9be-68be5ce12a3f")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1344,7 +1348,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/ffa26c6e-c9aa-4c01-b318-268fa94aa082")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1535,7 +1539,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/cdfedb15-42bd-4e64-9207-b0eab86878ac")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1715,7 +1719,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/7014e0ff-64d2-4e6d-8fa5-cae7ceaca49f")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1906,7 +1910,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/05f60567-99ba-4b0c-93b2-385a4e517a38")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2086,7 +2090,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/559e1964-d9a8-4003-838b-f02d873552a9")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2266,7 +2270,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/a063ceed-266f-4c87-97e0-54f86b9ba79d")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2417,7 +2421,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/503a1022-ec0c-45a3-b78e-780479f4c1ea")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2597,7 +2601,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/99b8c8a9-168a-424d-bd07-1391a73b4976")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2777,7 +2781,7 @@
 		(property ki_fp_filters "LED* LED_SMD:* LED_THT:*")
 		(path "/b335801b-fa42-4317-bb48-64a8d7f7880c")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2989,7 +2993,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/f50f883c-a037-42d3-984c-79c4362f66e8")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3150,7 +3154,7 @@
 		(property ki_fp_filters "Pin* Test*")
 		(path "/02dd482e-0892-40d8-b23e-a3e82583eadd")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3262,7 +3266,7 @@
 		(property ki_fp_filters "Pin* Test*")
 		(path "/57ba3e40-98bf-4aef-bc22-6fb2884d35e7")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3367,7 +3371,7 @@
 		)
 		(path "/6ea5564b-31d7-4d6d-beb0-e5e7013797e1")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3741,7 +3745,7 @@
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz -0 -0 -180)
+				(xyz 0 0 -180)
 			)
 		)
 	)
@@ -3810,7 +3814,7 @@
 		(property ki_fp_filters "LED* LED_SMD:* LED_THT:*")
 		(path "/b6476093-49c3-42f7-a7ea-03ed129dbea0")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4022,7 +4026,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/00e986a7-5c22-475b-9554-d5ecf90a488a")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4173,7 +4177,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/1c68ce09-b3c9-4e9b-aa8c-504a51e37caa")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4469,7 +4473,7 @@
 		)
 		(path "/4a18ae77-2da3-46f4-b423-cf9a7bcd3806")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5252,7 +5256,7 @@
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz -90 -0 90)
+				(xyz -90 0 90)
 			)
 		)
 	)
@@ -5321,7 +5325,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/15521903-c36c-4fd8-bd64-2cb3b6bd3e07")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5496,7 +5500,7 @@
 		)
 		(path "/e34fcf48-4db8-4c07-ac29-edabf4a08547")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5557,7 +5561,7 @@
 				(xyz 0.7 0.7 0.7)
 			)
 			(rotate
-				(xyz 90 -0 -0)
+				(xyz 90 0 0)
 			)
 		)
 	)
@@ -5618,7 +5622,7 @@
 		)
 		(path "/fce7304f-8f04-42ce-814d-d5da888897ab")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5759,7 +5763,7 @@
 				(xyz 0.65 0.75 0.65)
 			)
 			(rotate
-				(xyz -0 -0 90)
+				(xyz 0 0 90)
 			)
 		)
 	)
@@ -5817,7 +5821,7 @@
 		)
 		(path "/e4cf6630-bf19-4adc-b60f-8e6174e0f4c6")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6239,7 +6243,7 @@
 				(xyz 1 1 1)
 			)
 			(rotate
-				(xyz -90 -0 -0)
+				(xyz -90 0 0)
 			)
 		)
 	)
@@ -6250,7 +6254,7 @@
 		(descr "SMD pad as test Point, diameter 4.0mm")
 		(tags "test point SMD pad")
 		(property "Reference" "J3"
-			(at 0 9.5 0)
+			(at -7.5 1 0)
 			(layer "B.SilkS")
 			(uuid "1652edae-4e72-448f-8c81-27813481e41c")
 			(effects
@@ -6303,7 +6307,7 @@
 		)
 		(path "/10c3850c-c38e-413c-a8b6-393f75e4f98f")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6335,7 +6339,7 @@
 			(uuid "98279186-01ac-4642-95a1-09bfa97d0b17")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 8 0)
+			(at -7.5 -0.5 0)
 			(layer "B.Fab")
 			(uuid "dab00467-6659-4acf-bc56-62c26e991d48")
 			(effects
@@ -6364,7 +6368,7 @@
 				(xyz 0.7 0.7 0.7)
 			)
 			(rotate
-				(xyz 90 -0 -0)
+				(xyz 90 0 0)
 			)
 		)
 	)
@@ -6428,7 +6432,7 @@
 		)
 		(path "/9ac787c1-5a8f-4741-a41c-dd7857d10ee6")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6489,7 +6493,7 @@
 				(xyz 0.7 0.7 0.7)
 			)
 			(rotate
-				(xyz 90 -0 -0)
+				(xyz 90 0 0)
 			)
 		)
 	)
@@ -6553,7 +6557,7 @@
 		)
 		(path "/a73232d8-d8d4-4da4-959f-5f797a653e2e")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6614,7 +6618,7 @@
 				(xyz 0.7 0.7 0.7)
 			)
 			(rotate
-				(xyz 90 -0 -0)
+				(xyz 90 0 0)
 			)
 		)
 	)
@@ -6675,7 +6679,7 @@
 		)
 		(path "/918c1a79-1d9c-44b6-ae9f-1e1e1b39a058")
 		(sheetname "/")
-		(sheetfile "Proyecto de prueba.kicad_sch")
+		(sheetfile "Simulador de señales biomedicas.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6816,7 +6820,7 @@
 				(xyz 0.65 0.75 0.65)
 			)
 			(rotate
-				(xyz -0 -0 90)
+				(xyz 0 0 90)
 			)
 		)
 	)
@@ -6957,7 +6961,7 @@
 			(justify left bottom)
 		)
 	)
-	(gr_text "UDD IBB224S-1 - PROYECTO 13\n		 B.G - J.T.R.R "
+	(gr_text "UDD IBB224S-1 - PROYECTO 05\n		 B.G - J.T.R.R "
 		(at 113.5 47 0)
 		(layer "F.SilkS")
 		(uuid "2fdb4fd5-a7df-4fe8-8b1c-e60ca581d88e")

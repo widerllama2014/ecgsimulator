@@ -4,6 +4,10 @@
 	(generator_version "10.0")
 	(uuid "a97c120f-b434-430d-8622-c04d8223901b")
 	(paper "A4")
+	(title_block
+		(title "ECG Simulator")
+		(date "2026-11-28")
+	)
 	(lib_symbols
 		(symbol "Connector:TestPoint"
 			(pin_numbers
@@ -2914,7 +2918,7 @@
 			(uuid "6241ac7b-79e2-4305-be7b-440813a53616")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "C1")
 					(unit 1)
@@ -2992,7 +2996,7 @@
 			(uuid "4e8475d5-b994-4a13-b2ff-8f34fedaed5f")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR01")
 					(unit 1)
@@ -3071,7 +3075,7 @@
 			(uuid "f811d566-2c8b-449b-8bc2-2b1bd1d5290c")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "TP3")
 					(unit 1)
@@ -3151,7 +3155,7 @@
 			(uuid "5eeb4477-0513-4650-a95b-1f8f4e4ddf4b")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "C5")
 					(unit 1)
@@ -3228,7 +3232,7 @@
 			(uuid "79b99c35-36c5-404d-8112-1da95ec471b4")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "J3")
 					(unit 1)
@@ -3308,7 +3312,7 @@
 			(uuid "5e935769-ec7a-4f26-a218-961e71e2a96c")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R3")
 					(unit 1)
@@ -3388,7 +3392,7 @@
 			(uuid "97e90f14-29ec-45ca-a947-cf1ebadc06e6")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R10")
 					(unit 1)
@@ -3467,7 +3471,7 @@
 			(uuid "b32963bf-d9ee-43ae-a806-548047867402")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR018")
 					(unit 1)
@@ -3545,7 +3549,7 @@
 			(uuid "cf1722a9-22ae-4b0d-b40d-b1fa40bdb9ca")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR016")
 					(unit 1)
@@ -3622,7 +3626,7 @@
 			(uuid "7ad6c599-c39d-41ce-95c4-214d72b5e805")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR06")
 					(unit 1)
@@ -3700,7 +3704,7 @@
 			(uuid "dd9b436a-b16a-4fdb-8ddf-f15ab4f7fc57")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR03")
 					(unit 1)
@@ -3778,7 +3782,7 @@
 			(uuid "8e10766b-9b26-4ef8-adb9-b0923bfc9d4d")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#Ge01")
 					(unit 1)
@@ -3857,7 +3861,7 @@
 			(uuid "2035b92d-712b-429b-a29a-5ec96a5de169")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "TP2")
 					(unit 1)
@@ -4012,7 +4016,7 @@
 			(uuid "39d0154b-7cf3-4762-82cd-a757811f57c2")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "U3")
 					(unit 1)
@@ -4092,7 +4096,7 @@
 			(uuid "e02f8538-aaec-4675-b15c-e740868c64cc")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R9")
 					(unit 1)
@@ -4169,7 +4173,7 @@
 			(uuid "59210ed1-9dc2-42f7-97bc-fa0ec5ec28be")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR015")
 					(unit 1)
@@ -4247,7 +4251,7 @@
 			(uuid "d9bca137-9922-4366-9740-a81c5a323d0e")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR013")
 					(unit 1)
@@ -4327,7 +4331,7 @@
 			(uuid "0c44bbea-807f-4981-99be-d9e258575717")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R5")
 					(unit 1)
@@ -4406,7 +4410,7 @@
 			(uuid "1830840e-9b73-4231-92f2-6e676fefb976")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "TP1")
 					(unit 1)
@@ -4486,7 +4490,7 @@
 			(uuid "3b7a3c51-5c37-4a4a-9bff-fa97572d3ced")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#G2ee01")
 					(unit 1)
@@ -4582,7 +4586,7 @@
 			(uuid "863ecd2a-f0fd-4342-9029-b06c3e04cb80")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "U2")
 					(unit 1)
@@ -4662,7 +4666,7 @@
 			(uuid "2034947e-46a7-43fd-97bb-b84c409a629d")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R1")
 					(unit 1)
@@ -4742,7 +4746,7 @@
 			(uuid "9d552393-d3ad-4b67-875e-5efcb33f6a9f")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR08")
 					(unit 1)
@@ -4820,7 +4824,7 @@
 			(uuid "f7737c62-4e9f-4cfb-80ee-2bb24612ecec")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR010")
 					(unit 1)
@@ -4900,7 +4904,7 @@
 			(uuid "c0206752-dbe3-409d-8f45-d183dd9a4498")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "C2")
 					(unit 1)
@@ -4979,7 +4983,7 @@
 			(uuid "371fcd1a-2538-4efd-b420-7cd322051b9a")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "SW1")
 					(unit 1)
@@ -5060,7 +5064,7 @@
 			(uuid "90d12250-8f88-46ee-a7e8-b71c9c39854c")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "C7")
 					(unit 1)
@@ -5140,7 +5144,7 @@
 			(uuid "1c40af52-16ba-4d9f-b856-71127e77795d")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "C6")
 					(unit 1)
@@ -5220,7 +5224,7 @@
 			(uuid "5f627058-476f-4c2b-808d-8e0ca7372fbb")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R7")
 					(unit 1)
@@ -5297,7 +5301,7 @@
 			(uuid "0354fbc7-497f-4b62-9294-3490d834aa06")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "J2")
 					(unit 1)
@@ -5375,7 +5379,7 @@
 			(uuid "ec186a0d-bbe5-40b4-95a0-d49af0917edd")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR012")
 					(unit 1)
@@ -5456,7 +5460,7 @@
 			(uuid "4dfbf941-b47e-44e4-a6e9-083633bb24a9")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "C3")
 					(unit 1)
@@ -5534,7 +5538,7 @@
 			(uuid "dd3c80ba-9b7f-47e5-9228-2348b92f9342")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#FLG03")
 					(unit 1)
@@ -5611,7 +5615,7 @@
 			(uuid "d7379be1-be96-4da6-8297-51a2787a1a3e")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "J1")
 					(unit 1)
@@ -5725,7 +5729,7 @@
 			(uuid "49d36a5e-b0dd-4b45-959f-e7765b5cb394")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "BT1")
 					(unit 1)
@@ -5803,7 +5807,7 @@
 			(uuid "d746adcb-d585-4aa7-8285-a97bcce14188")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR04")
 					(unit 1)
@@ -5883,7 +5887,7 @@
 			(uuid "0216ab49-e3e5-4e7c-a8a4-1d2037cfb60f")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "D2")
 					(unit 1)
@@ -5961,7 +5965,7 @@
 			(uuid "140ab29f-c73c-441d-b3d4-1c20c2e4014c")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "D1")
 					(unit 1)
@@ -6039,7 +6043,7 @@
 			(uuid "e16cc0f0-1dba-494b-8650-86bc7901f3d8")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR05")
 					(unit 1)
@@ -6117,7 +6121,7 @@
 			(uuid "b01367bc-cf9a-4d40-8d0e-882d221ebbae")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR011")
 					(unit 1)
@@ -6197,7 +6201,7 @@
 			(uuid "ef17be0f-d811-47e5-b4ff-e8f924167da0")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R6")
 					(unit 1)
@@ -6275,7 +6279,7 @@
 			(uuid "bd23368e-a833-49cc-8bd0-ca66f0815d17")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#G01")
 					(unit 1)
@@ -6355,7 +6359,7 @@
 			(uuid "ecd86da6-3fc6-46f1-b01f-3c6aeb55c04b")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R11")
 					(unit 1)
@@ -6432,7 +6436,7 @@
 			(uuid "cad57064-e3d2-4674-8560-6fe96828ad05")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "J4")
 					(unit 1)
@@ -6517,7 +6521,7 @@
 			(uuid "59bf2b59-47ab-4944-a8ef-c244b52ee982")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "U1")
 					(unit 1)
@@ -6595,7 +6599,7 @@
 			(uuid "138c8026-cbe4-4e24-a7b9-e678f259f812")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR014")
 					(unit 1)
@@ -6673,7 +6677,7 @@
 			(uuid "f952c4b5-1560-470c-8857-75ca00c17cad")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR017")
 					(unit 1)
@@ -6753,7 +6757,7 @@
 			(uuid "0110a644-4440-4a8f-9d08-12480f6a58cc")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "C4")
 					(unit 1)
@@ -6833,7 +6837,7 @@
 			(uuid "fdd3b284-1c24-4dea-bdbb-cd1f8b912dac")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R8")
 					(unit 1)
@@ -6911,7 +6915,7 @@
 			(uuid "444b48d2-7747-4d7e-b1ba-6b42b6a1ccee")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "#PWR09")
 					(unit 1)
@@ -6991,7 +6995,7 @@
 			(uuid "47c611db-acfe-445c-9872-2e9b17b81b6a")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R4")
 					(unit 1)
@@ -7073,7 +7077,7 @@
 			(uuid "aecfe5c3-c808-4acc-8781-5e3569154d75")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "SW2")
 					(unit 1)
@@ -7153,7 +7157,7 @@
 			(uuid "e9ff6204-c394-4e48-aa5a-b0bcb4b499cf")
 		)
 		(instances
-			(project "Proyecto de prueba"
+			(project "Simulador de señales biomedicas"
 				(path "/a97c120f-b434-430d-8622-c04d8223901b"
 					(reference "R2")
 					(unit 1)

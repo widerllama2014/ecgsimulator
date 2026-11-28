@@ -542,7 +542,7 @@
     ]
   },
   "meta": {
-    "filename": "Proyecto de prueba.kicad_pro",
+    "filename": "Simulador de señales biomedicas.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -583,7 +583,7 @@
     "last_paths": {
       "idf": "",
       "netlist": "",
-      "plot": "../outputs/GERBER/",
+      "plot": "../outputs/Gerber/",
       "specctra_dsn": "",
       "step": "../outputs/ECG.step",
       "vrml": ""
@@ -763,7 +763,7 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "Proyecto de prueba.kicad_sch",
+        "filename": "Simulador de señales biomedicas.kicad_sch",
         "name": "Raíz",
         "uuid": "a97c120f-b434-430d-8622-c04d8223901b"
       }
