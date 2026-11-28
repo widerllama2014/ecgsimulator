@@ -84,7 +84,7 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "../outputs/")
+			(outputdirectory "../outputs/GERBER/")
 		)
 	)
 	(footprint "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm"
@@ -7437,6 +7437,22 @@
 		(uuid "43e5e6b0-0a22-4642-adde-725447240a30")
 	)
 	(segment
+		(start 174 143)
+		(end 177.04925 139.95075)
+		(width 0.8)
+		(layer "B.Cu")
+		(net "GND")
+		(uuid "43ec3d0c-7931-49b2-b0fc-334bd703913b")
+	)
+	(segment
+		(start 177.04925 139.95075)
+		(end 177.04925 133.56435)
+		(width 0.8)
+		(layer "B.Cu")
+		(net "GND")
+		(uuid "476a56dc-2106-432b-93b0-897409805557")
+	)
+	(segment
 		(start 107.08 108)
 		(end 107.08 106.92)
 		(width 0.8)
@@ -7509,6 +7525,14 @@
 		(uuid "7a19f98e-e4a6-4f5a-85f9-54f185077cef")
 	)
 	(segment
+		(start 130.4 143)
+		(end 130.4 133.5)
+		(width 0.8)
+		(layer "B.Cu")
+		(net "GND")
+		(uuid "7e5f8b88-bdc8-47fa-9d76-0da1055ba54c")
+	)
+	(segment
 		(start 173 81.5)
 		(end 174.5 80)
 		(width 0.8)
@@ -7518,7 +7542,7 @@
 	)
 	(segment
 		(start 130.4 154.775)
-		(end 130.4 133.5)
+		(end 130.4 143)
 		(width 0.8)
 		(layer "B.Cu")
 		(net "GND")
@@ -7595,6 +7619,14 @@
 		(layer "B.Cu")
 		(net "GND")
 		(uuid "c7dddabc-c934-4b8e-bf0d-3fcd1318e1a1")
+	)
+	(segment
+		(start 130.4 143)
+		(end 174 143)
+		(width 0.8)
+		(layer "B.Cu")
+		(net "GND")
+		(uuid "c8879be1-6729-4908-853e-643e453e2222")
 	)
 	(segment
 		(start 143 118)

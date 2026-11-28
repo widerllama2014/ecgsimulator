@@ -18,6 +18,13 @@ Registro cronológico de avances, decisiones y problemas.
 - **Reglas de diseño:** la clase Default y las restricciones globales quedaron en 0,8 mm
   de ancho y 0,8 mm de separación. Antes solo el ancho de pista predefinido era 0,8 mm,
   así que el DRC revisaba la separación con 0,2 mm.
+- **GND en una sola red:** las dos partes de la tierra (una con RL, el canal LL y los LED;
+  la otra con RA, el canal LA y la alimentación) solo se unían por dentro de la
+  ESP32-CAM. Se agregó una pista en B.Cu que las une.
+- **Versiones de la placa:** la V3 queda como diseño final y no se volvió a fresar. La
+  placa física es la V2 con el arreglo manual del 26 de noviembre.
+- Batería agregada al esquemático y a la BOM (`MATERIALES_ECG.csv`); STEP de la placa
+  (`ECG.step`), Gerber y perforaciones (`GERBER.zip`) e imágenes actualizadas.
 
 ## 2026-11-26 — PCB final: canales separados y huella propia de electrodos
 

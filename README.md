@@ -13,22 +13,68 @@ Project 5, *Biomedical Signal Simulator*, group 13. Electrónica Biomédica
 
 | Team member | E-mail | Main role |
 |---|---|---|
-| José Tomás Romero | jt.romeroreyes@udd.cl | Schematic, PCB, BOM, documentation and repository |
-| Benjamín Garrido | b.garridob@udd.cl | Firmware, user interface and measurements |
+| José Tomás Romero | jt.romeroreyes@udd.cl | Schematic, PCB, BOM, final prototype and Git repository |
+| Benjamín Garrido | b.garridob@udd.cl | First prototype and first circuit design (on paper), firmware, software and measurements |
 
-Instructors: Alejandro Rebolledo and Wladimir.
+Shared by both: research and writing of the reports.
+
+Professors: Alejandro Rebolledo and Wladimir Araya. Teaching assistant: Nicolas Walker.
 
 ---
 
-## How it works
+## Status and presented version
+
+- **Presented version:** the last commit of the `main` branch, running on the **PCB v2**
+  board (milled in the lab and fixed by hand to match the v3 design).
+- **Part I** (proposal and requirements) and **Part II** (electronic design and PCB):
+  delivered, see `docs/informes/`.
+- **Works:** tested on a breadboard with an oscilloscope: the four rhythms (40, 60, 120
+  and 180 bpm), the 1 mV calibration pulse, the vector-mode scenarios and WiFi control.
+  Results are in the final report.
+- **PCB:** v2 milled and fixed by hand to match v3. v3 is the final design and was not
+  milled again.
+- **Pending:** oscilloscope test of the PCB, integration test with a real ECG reader
+  (Project 4, groups 5 and 11), testing the EMG mode on hardware, a 10-measurement
+  series per rhythm, and making the blue LED on IO12 work.
+
+## Architecture
 
 ```
-                 ┌── IO14 ─ RC filter (1 kΩ/100 nF + 10 kΩ/10 nF) ─ TP1 ─ 220 kΩ ─┬─ LA
- ESP32-CAM ──────┤                                                                 └─ 200 Ω ─ GND
- (2 × PWM,       └── IO13 ─ RC filter (1 kΩ/100 nF + 10 kΩ/10 nF) ─ TP2 ─ 220 kΩ ─┬─ LL
-  62.5 kHz,                                                                        └─ 200 Ω ─ GND
-  10 bit)                                                         RA ─ 200 Ω ─ GND     RL ─ GND
+ POWER
+   USB-C ──► TP4056 (charger) ──► SW1 ON/OFF ──► MT3608 (boost, set to 5.0 V) ──► 5 V ──► ESP32-CAM
+                 ▲                                                                  └──► green LED (ON)
+                 └── LiPo 1S 3.7 V, 1000 mAh (B+ / B−)
+
+ SIGNAL (one RC filter and one 1:1101 divider per channel)
+   ESP32-CAM ─┬─ IO14 (PWM) ──► RC filter ──► TP1 ──► 220 kΩ / 200 Ω ──► LA electrode
+              └─ IO13 (PWM) ──► RC filter ──► TP2 ──► 220 kΩ / 200 Ω ──► LL electrode
+                                     RA electrode ── 200 Ω ── GND       RL electrode ── GND
+
+ INTERFACES
+   SW2 (IO15) ──► change mode              GPIO33 ──► on-board red LED, blinks with each beat
+   WiFi network "Simulador-ECG" ──► web page at 192.168.4.1 (phone or PC)
+   USB serial, 115200 baud ──► Arduino Serial Monitor or software/vector_ecg.py
 ```
+
+Each RC filter has two stages: 1 kΩ / 100 nF followed by 10 kΩ / 10 nF.
+
+**The simulator works without any external application.** The whole signal is
+generated on the ESP32-CAM, and the control web page is served by the board itself.
+The PC tools in `software/` are optional.
+
+**Main files:**
+
+- **Schematic:** [KiCad](electronica/kicad/Proyecto%20de%20prueba.kicad_sch) ·
+  [PDF](electronica/outputs/Esquematicopdf.pdf) · [PNG](electronica/outputs/imagenes/Esquematico.png)
+- **PCB:** [KiCad](electronica/kicad/Proyecto%20de%20prueba.kicad_pcb) ·
+  [PDF](electronica/outputs/PCBpdf.pdf) · [PNG](electronica/outputs/imagenes/PCB.png) ·
+  [3D (STEP)](electronica/outputs/ECG.step)
+- **Firmware:** [simulador_ecg_2canales.ino](firmware/simulador_ecg_2canales/simulador_ecg_2canales.ino) ·
+  [simulador_ecg_wifi.ino](firmware/simulador_ecg_wifi/simulador_ecg_wifi.ino)
+- **Software:** [vector_ecg.py](software/vector_ecg.py) ·
+  [banco_virtual_ecg.html](software/banco_virtual_ecg.html)
+
+### How the signal works
 
 - Each channel turns the PWM into a smooth voltage (both filter stages cut at ≈1.6 kHz)
   and divides it by **1101**, so **1 mV at the electrode = 1.101 V at the test point**.
@@ -47,7 +93,7 @@ Instructors: Alejandro Rebolledo and Wladimir.
 
 | Part | Function | Datasheet |
 |---|---|---|
-| ESP32-CAM (AI-Thinker) | Generates both PWM channels; WiFi access point | [esp32cam.pdf](docs/datasheets/esp32cam.pdf) |
+| ESP32-CAM (AI-Thinker) | Generates both PWM channels, creates its own WiFi network and serves the control web page | [esp32cam.pdf](docs/datasheets/esp32cam.pdf) |
 | TP4056 module (USB-C) | Charges the battery | [TP4056.PDF](docs/datasheets/TP4056.PDF) |
 | LiPo 1S, 3.7 V, 1000 mAh (LP803040) | Power supply, no mains connection | [LP803040](docs/datasheets/LP803040-1000mAh-datasheet.pdf) |
 | MT3608 boost module | Raises the battery voltage to 5 V for the ESP32-CAM | [MT3608.pdf](docs/datasheets/MT3608.pdf) |
@@ -55,7 +101,7 @@ Instructors: Alejandro Rebolledo and Wladimir.
 | SW2 | Mode button (IO15) | |
 | 4 × ECG snap connectors | Electrodes RA, LA, LL and RL, soldered on copper pads | |
 | R 1 kΩ, 10 kΩ, 220 kΩ, 200 Ω; C 100 nF, 10 nF | RC filter and divider, one set per channel | |
-| LEDs + 330 Ω | Green: power on (5 V). Blue: status (IO12) | |
+| LEDs + 330 Ω | Green: power on (5 V). Blue: IO12 (not used by the current firmware) | |
 
 The battery wires are soldered to the B+/B− pads of the TP4056 module.
 **Set the MT3608 output to 5.0 V with its trimmer before plugging in the ESP32-CAM.**
@@ -67,7 +113,7 @@ The battery wires are soldered to the B+/B− pads of the TP4056 module.
 | IO14 | PWM, channel LA (DI) |
 | IO13 | PWM, channel LL (DII) |
 | IO15 | Mode button (to GND) |
-| IO12 | Blue LED on the PCB |
+| IO12 | Blue LED on the PCB. Not functional yet: the firmware reads IO12 as the start/stop button |
 | GPIO33 | On-board red LED, blinks with each R wave |
 | IO4 | Camera flash, kept off |
 
@@ -88,32 +134,65 @@ The electrodes are at millivolt level, so measure at the test points and convert
 and 1.55 V with the vector/WiFi firmware. For DIII, measure between TP1 and TP2 with a
 battery-powered oscilloscope.
 
-## PCB (ECG Simulator v3)
+> **On the presented v2 board** the test points differ from v3. After the manual fix,
+> the test point marked **TP1 carries channel LL**, and channel LA has no test point:
+> measure it on the lead of **C5** that is not connected to GND. The GND test point is
+> the same.
 
-- KiCad 10 project: `electronica/kicad/Proyecto de prueba.kicad_pro`.
-- 90 × 130 mm, single-sided, all tracks on **B.Cu** (no vias), milled on the lab CNC
+## PCB
+
+- KiCad 10 project: `electronica/kicad/Proyecto de prueba.kicad_pro`. The design files
+  are **v3**, the final version.
+- 90 × 130 mm, single-sided, all tracks on **B.Cu** (no vias), designed for the lab CNC
   with 0.8 mm minimum track width and 0.8 mm clearance.
+- The board milled in the lab is **v2**. It was brought up to v3 by hand: two track
+  cuts to separate the channels, C7 replaced by a 200 Ω resistor (RA to GND) and a
+  10 nF capacitor added to the LL channel. With this fix, v2 and v3 work the same way
+  in practice; the only difference is that v2 has fewer test points.
+- The electrode snaps were reused from disposable ECG electrodes, because we could not
+  find them for sale. Each electrode was cut down to its snap, the top and bottom
+  parts were separated, and only the top stud was mounted. Its material cannot be
+  soldered, so it was fixed to the copper pad with white PVA glue (*cola fría*) on the
+  edges only; the underside of the stud rests directly on the pad, and the electrical
+  connection was checked.
 - Four Ø3.2 mm mounting holes near the corners.
 - The electrode snaps, both switches and the MT3608 module are mounted on the bottom
   side, which is the side facing the user.
 - Custom symbols, footprints and 3D models are in `electronica/libraries/`
   (`proyecto_ECG.kicad_sym`, `proyecto_ECG.pretty/`, `3dmodels/`). All library and
   3D-model paths are relative to the project, so it opens on any computer.
-- **Design note:** the GND net is split in two parts that are joined through ground
-  pins 2 and 9 of the ESP32-CAM. The module must be installed for all electrodes to
-  share the same ground.
 
 | Fabrication file | Content |
 |---|---|
 | [`electronica/outputs/GERBER.zip`](electronica/outputs/GERBER.zip) | Gerbers (B.Cu, F.Cu, Edge.Cuts, F.Silkscreen) and drill files (PTH, NPTH) |
 | [`electronica/outputs/MATERIALES_ECG.csv`](electronica/outputs/MATERIALES_ECG.csv) | Bill of materials (BOM) |
 | [`electronica/outputs/ECG.step`](electronica/outputs/ECG.step) | 3D model of the assembled board |
-| [`electronica/outputs/imagenes/`](electronica/outputs/imagenes) | Schematic and PCB in PDF, 3D renders (top and bottom) |
+| [`electronica/outputs/Esquematicopdf.pdf`](electronica/outputs/Esquematicopdf.pdf) | Schematic (PDF) |
+| [`electronica/outputs/PCBpdf.pdf`](electronica/outputs/PCBpdf.pdf) | PCB views (PDF) |
+| [`electronica/outputs/imagenes/`](electronica/outputs/imagenes) | Schematic and PCB (PNG), 3D renders (front and back) |
 
 ## Firmware (Arduino IDE)
 
-Board: **AI Thinker ESP32-CAM** (Espressif esp32 core 3.x). Upload through the
-**ESP32-CAM-MB** base. Serial monitor at 115200 baud.
+- **Board:** AI Thinker ESP32-CAM, programmed through the **ESP32-CAM-MB** base.
+- **Tools:** Arduino IDE 2 with the board package **esp32 by Espressif Systems**
+  (tested with version 3.3.12).
+- **Dependencies:** none beyond the board package. `WiFi.h` and `DNSServer.h` come
+  with it.
+
+**To compile and upload:**
+
+1. In Arduino IDE, open *File → Preferences* and add this URL to *Additional boards
+   manager URLs*: `https://espressif.github.io/arduino-esp32/package_esp32_index.json`
+2. Open *Tools → Board → Boards Manager* and install **esp32 by Espressif Systems**.
+3. Open the sketch, for example
+   `firmware/simulador_ecg_2canales/simulador_ecg_2canales.ino`. For the WiFi version,
+   `pagina.h` must stay in the same folder as `simulador_ecg_wifi.ino`.
+4. Remove the microSD card, plug the ESP32-CAM into the ESP32-CAM-MB base and connect
+   it to the computer by USB.
+5. In *Tools → Board*, choose **AI Thinker ESP32-CAM**, and in *Tools → Port*, the COM
+   port of the base.
+6. Click *Upload*. The base resets the board by itself, so no buttons are needed.
+7. Open the Serial Monitor at **115200 baud** and press the RST button on the board.
 
 | Sketch | What it does |
 |---|---|
@@ -139,8 +218,43 @@ feeds a monitor.
 
 | File | What it does |
 |---|---|
-| [`software/vector_ecg.py`](software/vector_ecg.py) | Desktop viewer for the vector mode: drag the electrodes on a body and see DI, DII, DIII and the heart vector in 3D. `pip install pyserial matplotlib numpy`, then `python vector_ecg.py --demo` (no board) or `python vector_ecg.py --puerto COM5` |
-| [`software/banco_virtual_ecg.html`](software/banco_virtual_ecg.html) | Virtual test bench: simulated board, circuit, oscilloscope and multimeter, to practice measurements before the lab. Open it in any browser |
+| [`software/vector_ecg.py`](software/vector_ecg.py) | Desktop viewer for the vector mode: drag the electrodes on a body and see DI, DII, DIII and the heart vector in 3D |
+| [`software/banco_virtual_ecg.html`](software/banco_virtual_ecg.html) | Virtual test bench: simulated board, circuit, oscilloscope and multimeter, to practice measurements before the lab |
+
+**vector_ecg.py**
+
+- **Dependencies:** Python 3 and `pip install pyserial matplotlib numpy`.
+- **Without the board:** `python vector_ecg.py --demo`
+- **With the board:** load `simulador_ecg_wifi` (it accepts the same serial commands as
+  the earlier vector-mode sketch), connect the board by USB, **close the Arduino Serial
+  Monitor**, and run `python vector_ecg.py --puerto COM5`. Use the board's port (on
+  Mac/Linux, something like `/dev/ttyUSB0`). The program talks to the board over USB
+  serial at 115200 baud.
+
+**banco_virtual_ecg.html** opens in any web browser and does not connect to the board.
+
+## Initial check
+
+After uploading the firmware and turning the simulator on, you should see:
+
+1. **Power:** with SW1 on, the green LED lights up.
+2. **Serial Monitor (115200 baud):** with the 2-channel firmware, it prints
+   `PWM OK: 62500 Hz, 10 bits, 2 canales (IO14 = LA, IO13 = LL)` and then
+   `Modo: 60 lpm | R: DI 0.80, DII 1.00, DIII 0.20 mV`. The simulator starts at 60 bpm
+   and the red LED on the ESP32-CAM blinks with each beat.
+3. **Multimeter (DC):** about **0.80 V** at each channel's test point (1.55 V with the
+   WiFi firmware). On the v2 board, see the note under *Test points*.
+4. **Oscilloscope:** DC coupling, ×1 probe, 500 mV/div and 200 ms/div, with the ground
+   clip on the GND test point. Channel LA swings between about 0.76 and 1.68 V and
+   channel LL between about 0.50 and 1.90 V, one beat per second.
+5. **Mode button:** each press of SW2 moves to the next mode (40, 60, 120, 180 bpm and
+   calibration), and the Serial Monitor confirms the change.
+6. **WiFi firmware:** the network **Simulador-ECG** (password `ecg12345`) appears.
+   Open **http://192.168.4.1**: the page shows DI, DII and DIII and says
+   **PLACA CONECTADA**.
+
+To feed an ECG monitor, connect each monitor cable to the snap with the same name (RA,
+LA, LL and RL) and run the simulator from its battery.
 
 ## Repository structure
 
@@ -155,22 +269,11 @@ feeds a monitor.
 ├── electronica/
 │   ├── kicad/                  KiCad project (.kicad_pro, .kicad_sch, .kicad_pcb)
 │   ├── libraries/              Custom symbols, footprints and 3D models
-│   └── outputs/                BOM (CSV), STEP, Gerber + drill (.zip)
-│       └── imagenes/           Schematic PDF, PCB PDF and 3D renders
+│   └── outputs/                BOM (CSV), STEP, Gerber + drill (.zip), schematic and PCB (PDF)
+│       └── imagenes/           Schematic and PCB (PNG), 3D renders
 ├── firmware/                   ESP32-CAM sketches (current and previous versions)
 └── software/                   PC tools: vector viewer and virtual bench
 ```
-
-## Project status
-
-- **Part I** (proposal and requirements): delivered, see `docs/informes/`.
-- **Part II** (electronic design and PCB): delivered, see `docs/informes/`.
-- **Final prototype:** tested on a breadboard with an oscilloscope (four rhythms,
-  calibration pulse, vector-mode scenarios and WiFi control). Results are in the final
-  report.
-- **PCB v3:** milled on the lab CNC.
-- **Pending:** integration test with a real ECG reader (Project 4, groups 5 and 11),
-  testing the EMG mode on hardware and a 10-measurement series per rhythm.
 
 ## References
 
@@ -179,6 +282,29 @@ feeds a monitor.
 - Lynch, J. P. (2013). ECG simulator. https://www.instructables.com/ECG-Simulator/
 - Microchip Technology (2020). Using PWM to generate an analog output (TB3250).
 - Malmivuo, J. & Plonsey, R. (1995). *Bioelectromagnetism*. https://www.bem.fi/book/
+
+### Sources of symbols, footprints and 3D models
+
+| Part | Symbol and footprint | 3D model |
+|---|---|---|
+| ESP32-CAM | SnapMagic Search (SnapEDA): [ESP32-CAM by AI-Thinker](https://www.snapeda.com/parts/ESP32-CAM/AI-Thinker/view-part/) | Jan Ježek, GrabCAD: [ESP32-CAM](https://grabcad.com/library/esp32-cam-1) |
+| MT3608 boost module | SnapMagic Search (SnapEDA): [MT3608 DC-DC Step Up Converter 2A Booster Module](https://www.snapeda.com/parts/MT3608%20DC-DC%20Step%20Up%20Converter%202A%20Booster%20Module/Generic/view-part/) | MRMS - WORKSHOP, GrabCAD: [MT3608 DC to DC Boost Converter 2 A](https://grabcad.com/library/mt3608-dc-to-dc-boost-converter-2-a-1) |
+| TP4056 module (USB-C) | Made by the team (`TP4056_modulo`) | GrabCAD: *TP4056 Charging Module Type C* (STEP and Fusion 360) |
+| KCD1 switch (SW1, SW2) | Made by the team (`SW_Push_2P_ECG`), measured from the physical part | Source unknown: the download record was lost |
+| Electrode snap (J1–J4) | Made by the team (`conectorelectrodo`), based on KiCad's `TestPoint_Pad_D4.0mm` with the pad enlarged to 9 mm | 3D ContentCentral: [ECG Snap Button 4mm](https://www.3dcontentcentral.com/Download-Model.aspx?catalogid=171&id=1354647) |
+| Resistors, capacitors, LEDs and test points | [KiCad official libraries](https://gitlab.com/kicad/libraries/kicad-footprints) | KiCad official 3D models |
+
+## Acknowledgements
+
+We thank:
+
+- The **Engineering Materials Laboratory** (Laboratorio de Materiales de Ingeniería),
+  for lending us instruments and a place to work.
+- **Pablo Reyes**, for the ECG electrodes and for lending us an oscilloscope.
+- The **Centro de Investigación en Tecnologías para la Sociedad (C+)**, for lending us
+  materials and supplies, and for helping us with our questions.
+- The **UDD Science Laboratory** (Laboratorio de Ciencias), for lending us the laboratory
+  to work in and for providing supplies when we needed them.
 
 ## License
 
@@ -201,3 +327,10 @@ MERCHANTABILITY, SATISFACTORY QUALITY AND FITNESS FOR A PARTICULAR PURPOSE.
 Please see the CERN-OHL-S v2 for applicable conditions.
 Source Location: https://github.com/widerllama2014/ecgsimulator
 ```
+
+## AI use statement
+
+We used **Claude** (Anthropic) for code and research, and **Gemini** (Google) for
+research as well. Claude also made the first versions of the schematic and the PCB,
+which saved us a lot of time, and generated some of the symbols. In the end, all of
+this was modified by us to fit what the project needed.

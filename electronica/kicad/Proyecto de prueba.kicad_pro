@@ -583,7 +583,7 @@
     "last_paths": {
       "idf": "",
       "netlist": "",
-      "plot": "../outputs/",
+      "plot": "../outputs/GERBER/",
       "specctra_dsn": "",
       "step": "../outputs/ECG.step",
       "vrml": ""
