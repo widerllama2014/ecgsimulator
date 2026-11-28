@@ -2,6 +2,67 @@
 
 Registro cronológico de avances, decisiones y problemas.
 
+## 2026-11-27 — Repositorio final y proyecto de KiCad portable
+
+- **Firmware:** quedan vigentes `simulador_ecg_2canales` y `simulador_ecg_wifi`. Las
+  versiones anteriores pasaron a `firmware/Versiones Anteriores/`, con su `LEEME_versiones.md`.
+- **Software:** `vector_ecg.py` (visor del modo vector) y `banco_virtual_ecg.html` (banco virtual).
+- **Hojas de datos** en `docs/datasheets/`: ESP32-CAM, TP4056, MT3608, LiPo LP803040 e
+  interruptor KCD1-101F.
+- **Exportables** en `electronica/outputs/`: esquemático y PCB en PDF, vistas 3D, Gerber,
+  perforaciones y archivo de la Bantam.
+- **Rutas portables:** las tablas de librerías y los modelos 3D apuntaban a
+  `C:/Users/...`. Se cambiaron a rutas relativas (`${KIPRJMOD}/../libraries/...`) para que
+  el proyecto abra en cualquier computador, y se borraron entradas de librerías que ya
+  no existían.
+- **Reglas de diseño:** la clase Default y las restricciones globales quedaron en 0,8 mm
+  de ancho y 0,8 mm de separación. Antes solo el ancho de pista predefinido era 0,8 mm,
+  así que el DRC revisaba la separación con 0,2 mm.
+
+## 2026-11-26 — PCB final: canales separados y huella propia de electrodos
+
+- **Problema encontrado en la V2:** la etiqueta global "RA" estaba en los puntos de prueba
+  de los dos canales. Las salidas de los dos filtros quedaban unidas (LA = LL, DIII = 0) y
+  el borne RA quedaba al voltaje del filtro (≈ 0,8–1,8 V) en vez de 0 V.
+- **Esquemático corregido:** nodos separados TP_LA (R4, C5, R5, TP1) y TP_LL (R8, C7, R9,
+  TP2). RA va a GND por R11 (200 Ω), con la misma impedancia de salida que LA y LL; RL va
+  directo a GND; TP3 es la tierra para el osciloscopio.
+- **Huella propia `conectorelectrodo`:** pad SMD circular en B.Cu para soldar los broches
+  de los electrodos. Librería única del proyecto `proyecto_ECG` (símbolos y huellas) y
+  modelos 3D en `electronica/libraries/3dmodels/`.
+- **Arreglo para la placa V2 ya fresada:** cortar la pista R4–TP1 y la pista C7–R5,
+  reemplazar C7 por una resistencia de 200 Ω (RA a GND) y agregar un 10 nF entre la
+  salida de R8 y GND, para que el canal LL conserve sus dos etapas de filtro.
+
+## 2026-11-25 — PCB V2: nueva distribución
+
+- Se reordenó la placa (90 × 130 mm). Los electrodos pasaron de puntos de prueba a
+  discos de cobre en B.Cu, para soldar encima los broches.
+
+## 2026-11-13 — Archivos para la fresadora y código ordenado
+
+- Gerber de B.Cu y Edge.Cuts, perforaciones y archivo de la Bantam.
+- Se subieron los códigos usados en las pruebas.
+
+## 2026-11 — Extensiones del firmware
+
+- **Modo vector:** el corazón como vector 3D; seis escenarios (normal, eje a la izquierda,
+  eje a la derecha, cables RA–LA y LA–LL invertidos, dextrocardia), eje libre y electrodos
+  movibles.
+- **Control por WiFi:** red propia `Simulador-ECG` y página web en 192.168.4.1. La señal
+  pasa a una tarea propia de 1 ms.
+- **Modo EMG:** programado, pendiente de probar en la placa.
+
+## 2026-10-30 — Dos canales independientes con la ESP32-CAM
+
+- Con la red de resistencias de la Parte I, DI y DIII eran siempre la mitad de DII: las
+  tres derivaciones tenían la misma forma. Se pasó a dos canales iguales e
+  independientes (LA en IO14, LL en IO13), cada uno con su filtro RC de dos etapas y un
+  divisor 220 kΩ / 200 Ω (1:1101), con RA y RL a GND.
+- **Cambio de microcontrolador:** de la ESP32-S3 a la ESP32-CAM, la placa disponible. La
+  S3 no aceptó el PWM de 62,5 kHz con 10 bits; la ESP32-CAM sí.
+- El 29 de octubre se vio la primera señal de ECG completa con la ESP32-CAM (un canal).
+
 ## 2026-10-29 — PCB: colocación por bloques, contorno y agujeros
 
 - Se colocaron los 23 footprints en el PCB en **dos mitades** (arriba señal + bornes

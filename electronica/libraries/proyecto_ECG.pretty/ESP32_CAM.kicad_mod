@@ -859,7 +859,7 @@
 		(uuid "82f0d921-7bb1-47ad-a9b6-8e123dec3f3c")
 	)
 	(embedded_fonts no)
-	(model "C:/Users/jtrom/OneDrive/Escritorio/Trabajos/universidad/CLASES/Cuarto Semestre/Electronica biomedica/ecgsimulator_proyect/repository/electronica/libraries/3dmodels/ESP3-CAM v5 - black pcb.step"
+	(model "${KIPRJMOD}/../libraries/3dmodels/ESP3-CAM v5 - black pcb.step"
 		(offset
 			(xyz 13.5 12 6.5)
 		)

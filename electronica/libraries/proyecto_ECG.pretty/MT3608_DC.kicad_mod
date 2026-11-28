@@ -438,7 +438,7 @@
 		(uuid "5b3a32c6-34ca-481a-8024-b2e4814b1275")
 	)
 	(embedded_fonts no)
-	(model "C:/Users/jtrom/OneDrive/Escritorio/Trabajos/universidad/CLASES/Cuarto Semestre/Electronica biomedica/ecgsimulator_proyect/repository/electronica/libraries/3dmodels/MT3608_DC.STEP"
+	(model "${KIPRJMOD}/../libraries/3dmodels/MT3608_DC.STEP"
 		(offset
 			(xyz 0 0 0)
 		)

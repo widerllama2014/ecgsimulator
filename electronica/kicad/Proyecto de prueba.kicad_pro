@@ -76,7 +76,28 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        [
+          "clearance|180125000|82500000|6f5e9fad-8a07-4a95-a987-c0a68c3808b8|4eb46737-537d-4eb5-b5be-ab8856df74e2",
+          ""
+        ],
+        [
+          "clearance|180640000|93500000|30a2b005-1d96-4c25-9cc2-d72182233872|3cd7747a-824d-4ae2-b7e9-2225734f1ddc",
+          ""
+        ],
+        [
+          "missing_courtyard|106000000|157250000|e304e992-3348-4257-a1b9-6e5e74dfa6d7|00000000-0000-0000-0000-000000000000",
+          ""
+        ],
+        [
+          "missing_courtyard|172459250|144994350|efe5434e-b95b-4365-9324-7c8dec7991f0|00000000-0000-0000-0000-000000000000",
+          ""
+        ],
+        [
+          "unconnected_items|177049250|133564350|F.Cu|4|77fa28fb-7fab-4d2e-bc77-f517f5850ab4|284261ca-34de-4f22-9970-8d0e9c1c5e90",
+          ""
+        ]
+      ],
       "meta": {
         "version": 2
       },
@@ -146,7 +167,7 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.0,
+        "min_clearance": 0.8,
         "min_connection": 0.0,
         "min_copper_edge_clearance": 0.5,
         "min_groove_width": 0.0,
@@ -159,7 +180,7 @@
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
-        "min_track_width": 0.2,
+        "min_track_width": 0.8,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
         "solder_mask_to_copper_clearance": 0.0,
@@ -275,6 +296,10 @@
   },
   "erc": {
     "erc_exclusions": [
+      [
+        "pin_not_connected|1054100|584200|a4ffb0e6-0f29-4c14-8a08-003315da5cc5|00000000-0000-0000-0000-000000000000|/a97c120f-b434-430d-8622-c04d8223901b|/a97c120f-b434-430d-8622-c04d8223901b|",
+        ""
+      ],
       [
         "pin_not_connected|1054100|635000|abcf624d-f645-4dd9-a4de-e34be9514766|00000000-0000-0000-0000-000000000000|/a97c120f-b434-430d-8622-c04d8223901b|/a97c120f-b434-430d-8622-c04d8223901b|",
         ""
@@ -524,7 +549,7 @@
     "classes": [
       {
         "bus_width": 12,
-        "clearance": 0.2,
+        "clearance": 0.8,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
@@ -535,7 +560,7 @@
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "priority": 2147483647,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.2,
+        "track_width": 0.8,
         "tuning_profile": "",
         "via_diameter": 0.6,
         "via_drill": 0.3,
@@ -558,9 +583,9 @@
     "last_paths": {
       "idf": "",
       "netlist": "",
-      "plot": "../outputs/taladro/",
+      "plot": "../outputs/",
       "specctra_dsn": "",
-      "step": "",
+      "step": "../outputs/ECG.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
@@ -674,6 +699,24 @@
           "group_by": false,
           "label": "LCSC Part",
           "name": "LCSC Part",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Type",
+          "name": "Sim.Type",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Device",
+          "name": "Sim.Device",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Pins",
+          "name": "Sim.Pins",
           "show": false
         }
       ],

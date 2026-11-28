@@ -95,7 +95,7 @@
 		(uuid "ccba64f1-91b5-42c2-b8a1-7cf40b5f05fc")
 	)
 	(embedded_fonts no)
-	(model "C:/Users/jtrom/OneDrive/Escritorio/Trabajos/universidad/CLASES/Cuarto Semestre/Electronica biomedica/ecgsimulator_proyect/repository/electronica/libraries/3dmodels/conectorelectrodo.STEP"
+	(model "${KIPRJMOD}/../libraries/3dmodels/conectorelectrodo.STEP"
 		(offset
 			(xyz 0 0 2.5)
 		)

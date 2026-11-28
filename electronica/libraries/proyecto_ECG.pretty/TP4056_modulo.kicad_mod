@@ -1235,7 +1235,7 @@
 			(checksum "B6845093507B2B2EE5BDBEBFFF8B7E74")
 		)
 	)
-	(model "C:/Users/jtrom/OneDrive/Escritorio/Trabajos/universidad/CLASES/Cuarto Semestre/Electronica biomedica/ecgsimulator_proyect/repository/electronica/libraries/3dmodels/TP4056_Charging_Module_Type_C.step"
+	(model "${KIPRJMOD}/../libraries/3dmodels/TP4056_Charging_Module_Type_C.step"
 		(offset
 			(xyz 14 -9 0)
 		)

@@ -172,7 +172,7 @@
 		(uuid "6cd958d5-7de3-46b8-94a2-daad09908ee2")
 	)
 	(embedded_fonts no)
-	(model "C:/Users/jtrom/OneDrive/Escritorio/Trabajos/universidad/CLASES/Cuarto Semestre/Electronica biomedica/ecgsimulator_proyect/repository/electronica/libraries/3dmodels/kcd1_a.step"
+	(model "${KIPRJMOD}/../libraries/3dmodels/kcd1_a.step"
 		(offset
 			(xyz -2.5 0 6.5)
 		)
